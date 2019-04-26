@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE generatorConfiguration-->
-<!--        PUBLIC "-//mybatis.org//DTD Mybatis Generator Configuration 1.0//EN"-->
-<!--        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">-->
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
 <generatorConfiguration>
     <!--  导入的属性配置, 之后会用到配置中的变量  -->
     <properties resource="datasource.properties" />
@@ -20,11 +18,11 @@
 
         <!--    jdbc的数据库连接    -->
         <jdbcConnection
-            driverClass="${db.driverClassName}"
-            connectionURL="${db.url}"
-            userId="${db.username}"
-            password="${db.password}"/>
-
+                driverClass="${db.driverClassName}"
+                connectionURL="${db.url}"
+                userId="${db.username}"
+                password="${db.password}">
+        </jdbcConnection>
         <!-- optional type resolver, 数据库类型和java类型之间的切换 -->
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false" />
@@ -60,7 +58,7 @@
 
         <!-- targetPackage：mapper接口dao生成的位置 -->
         <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.mmall.dao" targetProject=".\src\main\java">-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mmall.dao" targetProject="./src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.myMail.dao" targetProject="./src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
