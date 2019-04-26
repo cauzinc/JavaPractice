@@ -1,0 +1,34 @@
+*.class
+
+#package file
+*.war
+*.ear
+
+#kdiff3 ignore
+*.orig
+
+#maven ignore
+Project/myMail/target/
+
+#eclipse igonore
+.settings/
+.project
+.classpath
+
+#idea
+Project/myMail/.idea/
+/Project/myMail/idea/
+*.ipr
+*.iml
+*.iws
+
+#temp log
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+#system ignore
+.DS_Store
+Thumbs_db
