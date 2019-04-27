@@ -1,6 +1,6 @@
-package com.myMail.dao;
+package com.myMall.dao;
 
-import com.myMail.pojo.PayInfo;
+import com.myMall.pojo.PayInfo;
 
 public interface PayInfoMapper {
     int deleteByPrimaryKey(Integer id);

@@ -1,6 +1,6 @@
-package com.myMail.dao;
+package com.myMall.dao;
 
-import com.myMail.pojo.OrderItem;
+import com.myMall.pojo.OrderItem;
 
 public interface OrderItemMapper {
     int deleteByPrimaryKey(Integer id);

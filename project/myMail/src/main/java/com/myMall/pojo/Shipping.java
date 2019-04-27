@@ -1,4 +1,4 @@
-package com.myMail.pojo;
+package com.myMall.pojo;
 
 import java.util.Date;
 

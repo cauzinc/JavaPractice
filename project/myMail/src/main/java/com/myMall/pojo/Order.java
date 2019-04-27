@@ -1,4 +1,4 @@
-package com.myMail.pojo;
+package com.myMall.pojo;
 
 import java.math.BigDecimal;
 import java.util.Date;

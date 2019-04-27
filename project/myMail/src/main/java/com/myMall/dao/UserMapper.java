@@ -1,6 +1,6 @@
-package com.myMail.dao;
+package com.myMall.dao;
 
-import com.myMail.pojo.User;
+import com.myMall.pojo.User;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
