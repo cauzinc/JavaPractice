@@ -61,6 +61,13 @@
       <artifactId>spring-test</artifactId>
       <version>${org.springframework.version}</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${org.springframework.version}</version>
+    </dependency>
+
     <!--  AOP  -->
     <dependency>
       <groupId>org.aspectj</groupId>
