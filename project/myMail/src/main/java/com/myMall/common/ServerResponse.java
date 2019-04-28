@@ -6,6 +6,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import java.io.Serializable;
 // 当有数据为null的时候，序列化时忽略这个数据
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+
 public class ServerResponse<T> implements Serializable {
     private int status;
     private String msg;
@@ -55,6 +56,7 @@ public class ServerResponse<T> implements Serializable {
         return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), msg);
     }
 
+    // 由于这里在编译的时候，确定是用泛型来传递数值，所以参数是String 类型，最后也不会调用另一个构造函数
     public static <T> ServerResponse<T> createBySuccess(T data) {
         return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), data);
     }
