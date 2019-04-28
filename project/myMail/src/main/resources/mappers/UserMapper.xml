@@ -159,6 +159,11 @@
     where username = #{username}
   </select>
 
+  <select id="checkUserEmail" resultType="int" parameterType="String">
+    select count(1) from mmall_user
+    where email = #{email}
+  </select>
+
   <!-- 这里的map == java.util.Map -->
   <select id="selectLogin" resultType="BaseResultMap" parameterMap="map">
     <include refid="Base_Column_List" />
