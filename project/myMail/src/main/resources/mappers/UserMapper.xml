@@ -185,6 +185,7 @@
 
   <!-- 这里的map == java.util.Map -->
   <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    select
     <include refid="Base_Column_List" />
     from mmall_user
     where username = #{username}
