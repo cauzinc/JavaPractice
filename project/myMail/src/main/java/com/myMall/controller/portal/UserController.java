@@ -77,8 +77,20 @@ public class UserController {
         return iUserService.checkForgetAnswer(username, question, answer);
     }
 
+    @RequestMapping(value = "reset_password_by_token.do", method = RequestMethod.POST)
+    @ResponseBody
     public ServerResponse<String> resetPasswordByToken(String username, String newPassword, String token) {
-        return null;
+        return iUserService.resetPasswordByToken(username, newPassword, token);
+    }
+
+    @RequestMapping(value = "reset_password.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> resetPassword(HttpSession session, String oldPassword, String newPassword) {
+        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
+        if(currentUser == null) {
+            return ServerResponse.createByErrorByMessage("用户未登录");
+        }
+        return iUserService.resetPassword(currentUser, oldPassword, newPassword);
     }
 
 }

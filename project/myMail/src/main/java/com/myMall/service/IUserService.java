@@ -13,4 +13,8 @@ public interface IUserService {
     ServerResponse<String> selectQuestion(String username);
 
     ServerResponse<String> checkForgetAnswer(String username, String question, String answer);
+
+    ServerResponse<String> resetPasswordByToken(String username, String newPassword, String token);
+
+    ServerResponse<String> resetPassword(User user, String oldPassword, String newPassword);
 }

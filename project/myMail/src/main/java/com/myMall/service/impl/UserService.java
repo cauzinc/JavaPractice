@@ -104,4 +104,61 @@ public class UserService implements IUserService {
         return ServerResponse.createBySuccessByMessage(token);
     }
 
+    /**
+     * 通过问题重置密码
+     * @param username
+     * @param newPassword
+     * @param token 回答问题时获取的token
+     * @return
+     */
+    public ServerResponse<String> resetPasswordByToken(String username, String newPassword, String token) {
+        if(StringUtils.isBlank(token)) {
+            return ServerResponse.createByErrorByMessage("缺少token");
+        }
+        int resultCount = userMapper.checkUsername(username);
+        if(resultCount == 0) {
+            return ServerResponse.createByErrorByMessage("用户不存在");
+        }
+        String tokenInCache = TokenCache.getValue("token_" + username);
+        if(StringUtils.isBlank(tokenInCache)) {
+            return ServerResponse.createByErrorByMessage("token已过期");
+        }
+
+        if(StringUtils.equals(token, tokenInCache)) {
+            // 保存MD5加密后的密码
+            String md5Password = MD5Util.MD5EncodeUtf8(newPassword);
+            int updateCount = userMapper.setUserPassword(username, md5Password);
+            if(updateCount > 0) {
+                return ServerResponse.createBySuccessByMessage("修改密码成功");
+            }
+        } else {
+            return ServerResponse.createByErrorByMessage("token错误，请重新获取token");
+        }
+
+        // token不一致
+        return ServerResponse.createByErrorByMessage("密码修改失败");
+    }
+
+    /**
+     * 登录用户重置密码
+     * @param user
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    public ServerResponse<String> resetPassword(User user, String oldPassword, String newPassword) {
+        int userId = user.getId();
+        int resultCount = userMapper.checkUserPassword(userId, oldPassword);
+        if(resultCount == 0) {
+            return ServerResponse.createByErrorByMessage("密码错误，修改密码失败");
+        }
+        String md5Password = MD5Util.MD5EncodeUtf8(newPassword);
+        user.setPassword(md5Password);
+        int updateCount = userMapper.updateByPrimaryKeySelective(user);
+        if(updateCount > 0) {
+            return ServerResponse.createBySuccessByMessage("修改密码成功");
+        }
+        return ServerResponse.createBySuccessByMessage("修改密码失败");
+    }
+
 }
