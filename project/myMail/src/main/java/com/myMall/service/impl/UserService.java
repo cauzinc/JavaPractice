@@ -65,7 +65,7 @@ public class UserService implements IUserService {
      * @return
      */
     public ServerResponse<String> checkValid(String value, String type) {
-        if(!StringUtils.isBlank(value)) {
+        if(StringUtils.isNotBlank(value) && StringUtils.isNotBlank(type)) {
             if(Const.USERNAME.equals(type) && userMapper.checkUsername(value) > 0) {
                 return ServerResponse.createByErrorByMessage("用户名已存在");
             }
@@ -100,7 +100,7 @@ public class UserService implements IUserService {
         // 用java.util.UUID类来生成一个唯一不可重复的token, 并将token保存到本地缓存中
         String token = java.util.UUID.randomUUID().toString();
         TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, token);
-        return ServerResponse.createBySuccessByMessage(token);
+        return ServerResponse.createBySuccess(token);
     }
 
     /**
@@ -147,7 +147,7 @@ public class UserService implements IUserService {
      */
     public ServerResponse<String> resetPassword(User user, String oldPassword, String newPassword) {
         int userId = user.getId();
-        int resultCount = userMapper.checkUserPassword(userId, oldPassword);
+        int resultCount = userMapper.checkUserPassword(userId, MD5Util.MD5EncodeUtf8(oldPassword));
         if(resultCount == 0) {
             return ServerResponse.createByErrorByMessage("密码错误，修改密码失败");
         }
