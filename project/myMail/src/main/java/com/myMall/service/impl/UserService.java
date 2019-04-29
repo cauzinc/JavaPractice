@@ -2,6 +2,7 @@ package com.myMall.service.impl;
 
 import com.myMall.common.Const;
 import com.myMall.common.ServerResponse;
+import com.myMall.common.TokenCache;
 import com.myMall.dao.UserMapper;
 import com.myMall.pojo.User;
 import com.myMall.service.IUserService;
@@ -11,7 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// 这里设定了bean的id，表示自动注入时，要使用对应的字段名称
+import javax.servlet.http.HttpSession;
+
+// 这里设定了bean的id，表示自动注入时，注入和id一致的bean
 @Service("iUserService")
 public class UserService implements IUserService {
     @Autowired
@@ -76,6 +79,29 @@ public class UserService implements IUserService {
         }
         // 可以用isSuccess()来验证response的boolean
         return ServerResponse.createBySuccessByMessage("校验成功");
+    }
+
+    public ServerResponse<String> selectQuestion(String username) {
+        boolean ifUserNotExist = checkValid(username, Const.USERNAME).isSuccess();
+        if(ifUserNotExist) {
+            return ServerResponse.createByErrorByMessage("用户不存在");
+        }
+        String question = userMapper.selectQuestionByUsername(username);
+        if(StringUtils.isNotBlank(question)) {
+            return ServerResponse.createBySuccess(question);
+        }
+        return ServerResponse.createByErrorByMessage("用户未设置问题");
+    }
+
+    public ServerResponse<String> checkForgetAnswer(String username, String question, String answer) {
+        int resultCount = userMapper.checkUserQuestion(username, question, answer);
+        if(resultCount == 0) {
+            return ServerResponse.createByErrorByMessage("问题答案不正确");
+        }
+        // 用java.util.UUID类来生成一个唯一不可重复的token, 并将token保存到本地缓存中
+        String token = java.util.UUID.randomUUID().toString();
+        TokenCache.setKey("token_" + username, token);
+        return ServerResponse.createBySuccessByMessage(token);
     }
 
 }

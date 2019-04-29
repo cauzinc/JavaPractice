@@ -49,9 +49,36 @@ public class UserController {
         return iUserService.register(user);
     }
 
-    @RequestMapping(value = "check_valid.do", method = RequestMethod.POST)
+    @RequestMapping(value = "check_valid.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<String> checkValid(String value, String type) {
         return iUserService.checkValid(value, type);
     }
+
+    @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> getUserInfo(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user != null) {
+            return ServerResponse.createBySuccess(user);
+        }
+        return ServerResponse.createByErrorByMessage("用户未登录");
+    }
+
+    @RequestMapping(value = "get_forget_question.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> getForgetQuestion(String username) {
+        return iUserService.selectQuestion(username);
+    }
+
+    @RequestMapping(value = "check_forget_question.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> checkForgetAnswer(String username, String question, String answer) {
+        return iUserService.checkForgetAnswer(username, question, answer);
+    }
+
+    public ServerResponse<String> resetPasswordByToken(String username, String newPassword, String token) {
+        return null;
+    }
+
 }

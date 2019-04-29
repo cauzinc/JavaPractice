@@ -164,12 +164,25 @@
     where email = #{email}
   </select>
 
+  <select id="checkUserQuestion" resultType="int" parameterType="map">
+    select count(1) from mmall_user
+    where username = #{username}
+    and question = #{question}
+    and answer = #{answer}
+  </select>
+
   <!-- 这里的map == java.util.Map -->
-  <select id="selectLogin" resultType="BaseResultMap" parameterMap="map">
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
     <include refid="Base_Column_List" />
     from mmall_user
     where username = #{username}
     and password = #{password}
+  </select>
+
+  <select id="selectQuestionByUsername" resultType="string" parameterType="string">
+    select question
+    from mmall_user
+    where username = #{username}
   </select>
 
 </mapper>
