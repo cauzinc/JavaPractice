@@ -93,4 +93,22 @@ public class UserController {
         return iUserService.resetPassword(currentUser, oldPassword, newPassword);
     }
 
+    @RequestMapping(value = "update_user_info.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<User> updateUserInfo(HttpSession session, User user) {
+        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
+        if(currentUser == null) {
+            return ServerResponse.createByErrorByMessage("用户未登录");
+        }
+        // 用户不能修改username 和 id, 这里是防止误修改
+        user.setId(currentUser.getId());
+        user.setUsername(currentUser.getUsername());
+        ServerResponse<User> response = iUserService.updateUserInfo(user);
+        // 成功修改则更新session
+        if(response.isSuccess()) {
+            session.setAttribute(Const.CURRENT_USER, response.getData());
+        }
+        return response;
+    }
+
 }

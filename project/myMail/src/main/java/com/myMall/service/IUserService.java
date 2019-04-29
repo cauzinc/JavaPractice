@@ -17,4 +17,6 @@ public interface IUserService {
     ServerResponse<String> resetPasswordByToken(String username, String newPassword, String token);
 
     ServerResponse<String> resetPassword(User user, String oldPassword, String newPassword);
+
+    ServerResponse<User> updateUserInfo(User updateUser);
 }

@@ -12,8 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
-
 // 这里设定了bean的id，表示自动注入时，注入和id一致的bean
 @Service("iUserService")
 public class UserService implements IUserService {
@@ -159,6 +157,34 @@ public class UserService implements IUserService {
             return ServerResponse.createBySuccessByMessage("修改密码成功");
         }
         return ServerResponse.createBySuccessByMessage("修改密码失败");
+    }
+
+    /**
+     * 更新用户信息，用户名不可以被修改
+     * 要检查新的邮箱名是否和其他用户的邮箱名重复
+     * @param updateUser
+     * @return
+     */
+    public ServerResponse<User> updateUserInfo(User updateUser) {
+        String email = updateUser.getEmail();
+        int userId = updateUser.getId();
+        int resultCount = userMapper.checkEmailUsed(email, userId);
+        if(resultCount > 0) {
+            return ServerResponse.createByErrorByMessage("改邮箱已被使用");
+        }
+        User userCopy = new User();
+        // 只更新下列数据, id 和 username 返回到controller以储存到session
+        userCopy.setId(updateUser.getId());
+        userCopy.setUsername(updateUser.getUsername());
+        userCopy.setEmail(updateUser.getEmail());
+        userCopy.setPhone(updateUser.getPhone());
+        userCopy.setQuestion(updateUser.getQuestion());
+        userCopy.setAnswer(updateUser.getAnswer());
+        int updateCount = userMapper.updateByPrimaryKeySelective(userCopy);
+        if(updateCount > 0) {
+            return ServerResponse.createBySuccess("更新成功", userCopy);
+        }
+        return ServerResponse.createByErrorByMessage("更新失败");
     }
 
 }

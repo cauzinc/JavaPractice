@@ -18,7 +18,11 @@ public interface UserMapper {
 
     int checkUsername(String username);
 
+    // 注册时检查邮箱是否被使用
     int checkUserEmail(String email);
+
+    // 修改资料时检查邮箱是否被别人使用
+    int checkEmailUsed(@Param("email")String email, @Param("userId")int userId);
 
     int checkUserQuestion(@Param("username") String username,@Param("question") String question,@Param("answer") String answer);
 
