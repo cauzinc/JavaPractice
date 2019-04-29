@@ -1,5 +1,6 @@
 package com.myMall.service.impl;
 
+import com.github.pagehelper.StringUtil;
 import com.myMall.common.Const;
 import com.myMall.common.ServerResponse;
 import com.myMall.common.TokenCache;
@@ -185,6 +186,16 @@ public class UserService implements IUserService {
             return ServerResponse.createBySuccess("更新成功", userCopy);
         }
         return ServerResponse.createByErrorByMessage("更新失败");
+    }
+
+    public ServerResponse<User> getUserInfoById(int userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if(user == null) {
+            return ServerResponse.createBySuccessByMessage("找不到该用户的信息");
+        }
+        // 要记住隐藏用户的密码信息
+        user.setPassword(StringUtils.EMPTY);
+        return ServerResponse.createBySuccess(user);
     }
 
 }

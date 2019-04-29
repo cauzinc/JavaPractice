@@ -1,6 +1,7 @@
 package com.myMall.controller.portal;
 
 import com.myMall.common.Const;
+import com.myMall.common.ResponseCode;
 import com.myMall.common.ServerResponse;
 import com.myMall.pojo.User;
 import com.myMall.service.IUserService;
@@ -109,6 +110,16 @@ public class UserController {
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
         return response;
+    }
+
+    @RequestMapping(value = "get_user_info_by_id.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> getUserInfoById(HttpSession session) {
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorByErrorCode(ResponseCode.NEED_LOGIN.getCode(), "请先登录");
+        }
+        return iUserService.getUserInfoById(user.getId());
     }
 
 }
