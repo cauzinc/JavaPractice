@@ -100,7 +100,7 @@ public class UserService implements IUserService {
         }
         // 用java.util.UUID类来生成一个唯一不可重复的token, 并将token保存到本地缓存中
         String token = java.util.UUID.randomUUID().toString();
-        TokenCache.setKey("token_" + username, token);
+        TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, token);
         return ServerResponse.createBySuccessByMessage(token);
     }
 
@@ -119,7 +119,7 @@ public class UserService implements IUserService {
         if(resultCount == 0) {
             return ServerResponse.createByErrorByMessage("用户不存在");
         }
-        String tokenInCache = TokenCache.getValue("token_" + username);
+        String tokenInCache = TokenCache.getValue(TokenCache.TOKEN_PREFIX + username);
         if(StringUtils.isBlank(tokenInCache)) {
             return ServerResponse.createByErrorByMessage("token已过期");
         }

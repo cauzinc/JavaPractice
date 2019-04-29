@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TokenCache {
     private static Logger logger = LoggerFactory.getLogger(TokenCache.class);
-
+    public static final String TOKEN_PREFIX = "token_";
     // LRU算法
     // 最后Build中要实现一个匿名实现类
     private static LoadingCache<String, String> localCache = CacheBuilder.newBuilder().initialCapacity(1000).maximumSize(10000).expireAfterAccess(12, TimeUnit.HOURS)
