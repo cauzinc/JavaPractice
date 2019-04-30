@@ -55,6 +55,12 @@ public class CategoryService implements ICategoryService {
         return ServerResponse.createByErrorByMessage("修改失败");
     }
 
+    /**
+     * 返回目录
+     * @param parentId
+     * @param deep 递归获取所有子目录
+     * @return
+     */
     public ServerResponse<List<Category>> getCategory(Integer parentId, boolean deep) {
         List<Category> categoryList = categoryMapper.getParallelChildrenCategory(parentId);
         if(CollectionUtils.isEmpty(categoryList)) {

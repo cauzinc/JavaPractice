@@ -19,5 +19,6 @@
 >工具包
 
 `com.myMall.vo`
+>viewObject 供前端展示的对象
 
 ##配置文件
