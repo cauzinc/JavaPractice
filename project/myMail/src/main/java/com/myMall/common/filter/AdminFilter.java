@@ -1,6 +1,7 @@
 package com.myMall.common.filter;
 
 import com.myMall.common.Const;
+import com.myMall.common.ResponseCode;
 import com.myMall.common.ServerResponse;
 import com.myMall.pojo.User;
 import com.myMall.service.IUserService;
@@ -26,9 +27,8 @@ public class AdminFilter {
         this.iUserService = iUserService;
     }
 
-    @Pointcut("execution(public * com.myMall.controller.backend.CategoryManagerController.*(..))")
+    @Pointcut("execution(public * com.myMall.controller.backend.*ManagerController.*(..)) && !execution(public * com.myMall.controller.backend.UserManagerController.login(..))")
     public void CategoryManagerFilter() { }
-
 
     // 检查用户是否为管理员
     @Around("CategoryManagerFilter()")
@@ -36,7 +36,7 @@ public class AdminFilter {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        ServerResponse response = user == null ? ServerResponse.createByErrorByMessage("用户未登录")
+        ServerResponse response = user == null ? ServerResponse.createByErrorByErrorCode(ResponseCode.NEED_LOGIN.getCode(), "用户未登录")
                 : iUserService.checkAdmin(user.getId());
 
         if(response.isSuccess()) {
