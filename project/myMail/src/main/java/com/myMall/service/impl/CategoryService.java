@@ -55,24 +55,15 @@ public class CategoryService implements ICategoryService {
         return ServerResponse.createByErrorByMessage("修改失败");
     }
 
-
-
-    public ServerResponse<List<Category>> getParallelChildrenCategory(Integer parentId) {
+    public ServerResponse<List<Category>> getCategory(Integer parentId, boolean deep) {
         List<Category> categoryList = categoryMapper.getParallelChildrenCategory(parentId);
         if(CollectionUtils.isEmpty(categoryList)) {
             logger.debug("没有找到子目录");
             return ServerResponse.createByErrorByMessage("没有找到子目录");
         }
-        return ServerResponse.createBySuccess(categoryList);
-    }
-
-    public ServerResponse<List<Category>> getDeepChildrenCategory(Integer parentId) {
-        List<Category> categoryList = categoryMapper.getParallelChildrenCategory(parentId);
-        if(CollectionUtils.isEmpty(categoryList)) {
-            logger.debug("没有找到子目录");
-            return ServerResponse.createByErrorByMessage("没有找到子目录");
+        if(deep) {
+            categoryList.addAll(deepSearch(categoryList));
         }
-        categoryList.addAll(deepSearch(categoryList));
         return ServerResponse.createBySuccess(categoryList);
     }
 

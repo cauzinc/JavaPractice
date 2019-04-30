@@ -43,15 +43,12 @@ public class CategoryManagerController {
         return iCategoryService.setCategoryName(categoryName, categoryId);
     }
 
-    @RequestMapping(value = "get_parallel_children_category.do", method = RequestMethod.GET)
+    @RequestMapping(value = "get_category.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse getParallelChildrenCategory(@RequestParam(value="parentId", defaultValue = "0") int parentId) {
-        return iCategoryService.getParallelChildrenCategory(parentId);
+    public ServerResponse getCategory(@RequestParam(value="parentId", defaultValue = "0") int parentId,
+                                      @RequestParam(value="deep", defaultValue = "0") int deep) {
+        boolean ifDeep = deep == 1;
+        return iCategoryService.getCategory(parentId, ifDeep);
     }
 
-    @RequestMapping(value = "get_deep_children_category.do", method = RequestMethod.GET)
-    @ResponseBody
-    public ServerResponse getDeepChildrenCategory(@RequestParam(value="parentId", defaultValue = "0") int parentId) {
-        return iCategoryService.getDeepChildrenCategory(parentId);
-    }
 }
