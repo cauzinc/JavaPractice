@@ -21,6 +21,9 @@ public interface UserMapper {
     // 注册时检查邮箱是否被使用
     int checkUserEmail(String email);
 
+    // 检测当前用户是否是admin
+    int checkAdmin(int userId);
+
     // 修改资料时检查邮箱是否被别人使用
     int checkEmailUsed(@Param("email")String email, @Param("userId")int userId);
 
@@ -33,5 +36,4 @@ public interface UserMapper {
     String selectQuestionByUsername(@Param("username") String username);
 
     int setUserPassword(@Param("username")String username, @Param("newPassword")String newPassword);
-
 }

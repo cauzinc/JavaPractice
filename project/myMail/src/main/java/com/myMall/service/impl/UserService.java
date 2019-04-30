@@ -198,4 +198,11 @@ public class UserService implements IUserService {
         return ServerResponse.createBySuccess(user);
     }
 
+    public ServerResponse checkAdmin(int userId) {
+        int resultCount = userMapper.checkAdmin(userId);
+        if(resultCount > 0) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
+    }
 }
