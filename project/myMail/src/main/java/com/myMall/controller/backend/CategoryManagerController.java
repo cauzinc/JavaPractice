@@ -27,21 +27,31 @@ public class CategoryManagerController {
 
     /**
      * 增加一个新的分类，给parentId设置默认值0，如果前端没有传则使用这个默认值
-     * @param session
      * @param categoryName
      * @param parentId
      * @return
      */
     @RequestMapping(value = "add_category.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse addCategory(HttpSession session, String categoryName, @RequestParam(value = "parentId", defaultValue = "0") int parentId) {
+    public ServerResponse addCategory(String categoryName, @RequestParam(value = "parentId", defaultValue = "0") int parentId) {
         return iCategoryService.addCategory(categoryName, parentId);
     }
 
     @RequestMapping(value = "set_category_name.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse setCategoryName(HttpSession session, String categoryName, int categoryId) {
+    public ServerResponse setCategoryName(String categoryName, int categoryId) {
         return iCategoryService.setCategoryName(categoryName, categoryId);
     }
 
+    @RequestMapping(value = "get_parallel_children_category.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse getParallelChildrenCategory(@RequestParam(value="parentId", defaultValue = "0") int parentId) {
+        return iCategoryService.getParallelChildrenCategory(parentId);
+    }
+
+    @RequestMapping(value = "get_deep_children_category.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse getDeepChildrenCategory(@RequestParam(value="parentId", defaultValue = "0") int parentId) {
+        return iCategoryService.getDeepChildrenCategory(parentId);
+    }
 }
