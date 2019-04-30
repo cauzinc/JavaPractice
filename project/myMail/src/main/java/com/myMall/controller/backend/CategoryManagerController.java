@@ -35,29 +35,12 @@ public class CategoryManagerController {
     @RequestMapping(value = "add_category.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse addCategory(HttpSession session, String categoryName, @RequestParam(value = "parentId", defaultValue = "0") int parentId) {
-        // 检测用户身份
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null) {
-            return ServerResponse.createByErrorByMessage("用户未登录");
-        }
-        ServerResponse response = iUserService.checkAdmin(user.getId());
-        if(!response.isSuccess()) {
-            return ServerResponse.createByErrorByMessage("您没有权限");
-        }
         return iCategoryService.addCategory(categoryName, parentId);
     }
 
     @RequestMapping(value = "set_category_name.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse setCategoryName(HttpSession session, String categoryName, int categoryId) {
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null) {
-            return ServerResponse.createByErrorByMessage("用户未登录");
-        }
-        ServerResponse response = iUserService.checkAdmin(user.getId());
-        if(!response.isSuccess()) {
-            return ServerResponse.createByErrorByMessage("您没有权限");
-        }
         return iCategoryService.setCategoryName(categoryName, categoryId);
     }
 

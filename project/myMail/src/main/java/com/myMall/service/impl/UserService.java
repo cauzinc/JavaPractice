@@ -203,6 +203,6 @@ public class UserService implements IUserService {
         if(resultCount > 0) {
             return ServerResponse.createBySuccess();
         }
-        return ServerResponse.createByError();
+        return ServerResponse.createByErrorByMessage("您不是管理员");
     }
 }
