@@ -185,4 +185,29 @@
     ORDER BY id asc
   </select>
 
+  <!--
+    where 标签，等于下列语句
+
+    where 1=1
+    <if test="productId != null">
+      and id = #{productId}
+    </if>
+    <if test="productName != null">
+      and name like #{productName}
+    </if>
+  -->
+  <select id="searchProductList" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from mmall_product
+    <where>
+      <if test="productId != null">
+        and id = #{productId}
+      </if>
+      <if test="productName != null">
+        and name like #{productName}
+      </if>
+    </where>
+  </select>
+
 </mapper>

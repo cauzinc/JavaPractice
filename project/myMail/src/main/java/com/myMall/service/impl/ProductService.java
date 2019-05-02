@@ -81,10 +81,15 @@ public class ProductService implements IProductService {
          */
         PageHelper.startPage(pageNum, pageSize);
         List<Product> productList = productMapper.getProductList();
-        List<ProductListVO> resultList = new ArrayList<>();
-        for(Product p : productList) {
-            resultList.add(assembleListVO(p));
-        }
+        List<ProductListVO> resultList = assembleListVO(productList);
+        PageInfo<ProductListVO> pageResult = new PageInfo<>(resultList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    public ServerResponse searchProductList(int pageNum, int pageSize, int productId, String productName) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productMapper.searchProductList(productId, productName);
+        List<ProductListVO> resultList = assembleListVO(productList);
         PageInfo<ProductListVO> pageResult = new PageInfo<>(resultList);
         return ServerResponse.createBySuccess(pageResult);
     }
@@ -115,18 +120,24 @@ public class ProductService implements IProductService {
     }
 
     // 装配productListVO
-    private ProductListVO assembleListVO(Product product) {
-        ProductListVO listVO = new ProductListVO();
-        listVO.setId(product.getId());
-        listVO.setCategoryId(product.getCategoryId());
-        listVO.setName(product.getName());
-        listVO.setSubtitle(product.getSubtitle());
-        listVO.setMainImage(product.getMainImage());
-        listVO.setPrice(product.getPrice());
-        listVO.setStatus(product.getStatus());
-        listVO.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happymmall.com/"));
-        return listVO;
+    private List<ProductListVO> assembleListVO(List<Product> productList) {
+        List<ProductListVO> resultList = new ArrayList<>();
+        for(Product p : productList) {
+            ProductListVO listVO = new ProductListVO();
+            listVO.setId(p.getId());
+            listVO.setCategoryId(p.getCategoryId());
+            listVO.setName(p.getName());
+            listVO.setSubtitle(p.getSubtitle());
+            listVO.setMainImage(p.getMainImage());
+            listVO.setPrice(p.getPrice());
+            listVO.setStatus(p.getStatus());
+            listVO.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happymmall.com/"));
+            resultList.add(listVO);
+        }
+
+        return resultList;
     }
+
 }
 
 
