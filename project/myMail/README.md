@@ -19,6 +19,6 @@
 >工具包
 
 `com.myMall.vo`
->viewObject 供前端展示的对象
+>viewObject 供前端展示的对象, 随着业务扩展，在pojo和vo之间还可以设计bo(business object)
 
 ##配置文件
