@@ -86,8 +86,11 @@ public class ProductService implements IProductService {
         return ServerResponse.createBySuccess(pageResult);
     }
 
-    public ServerResponse searchProductList(int pageNum, int pageSize, int productId, String productName) {
+    public ServerResponse searchProductList(int pageNum, int pageSize, Integer productId, String productName) {
         PageHelper.startPage(pageNum, pageSize);
+        if(StringUtils.isNotBlank(productName)){
+            productName = new StringBuilder().append("%").append(productName).append("%").toString();
+        }
         List<Product> productList = productMapper.searchProductList(productId, productName);
         List<ProductListVO> resultList = assembleListVO(productList);
         PageInfo<ProductListVO> pageResult = new PageInfo<>(resultList);

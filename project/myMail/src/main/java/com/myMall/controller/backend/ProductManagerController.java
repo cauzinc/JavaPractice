@@ -48,7 +48,7 @@ public class ProductManagerController {
 
     @RequestMapping(value = "search_product_list.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse searchProductList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, int pageSize, int productId, String productName) {
+    public ServerResponse searchProductList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, int pageSize, Integer productId, String productName) {
         return iProductService.searchProductList(pageNum, pageSize, productId, productName);
     }
 
