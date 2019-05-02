@@ -1,8 +1,6 @@
 package com.myMall.controller.backend;
 
-import com.myMall.common.Const;
 import com.myMall.common.ServerResponse;
-import com.myMall.pojo.User;
 import com.myMall.service.ICategoryService;
 import com.myMall.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin/category/")

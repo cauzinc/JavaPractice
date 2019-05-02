@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("iCategoryService")
 public class CategoryService implements ICategoryService {
 
     private CategoryMapper categoryMapper;
