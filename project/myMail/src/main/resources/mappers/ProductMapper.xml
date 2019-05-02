@@ -177,4 +177,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!-- 这里列表使用pageHelper插件进行分页，他会自动注入limit offset字段，因此不要在查询语句最后写分号 -->
+  <select id="getProductList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    ORDER BY id asc
+  </select>
+
 </mapper>

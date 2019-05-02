@@ -10,4 +10,6 @@ public interface IProductService {
     ServerResponse setStatus(Integer productId, Integer status);
 
     ServerResponse<ProductDetailVO> getProductDetail(Integer productId);
+
+    ServerResponse getProductList(int pageNum, int pageSize);
 }

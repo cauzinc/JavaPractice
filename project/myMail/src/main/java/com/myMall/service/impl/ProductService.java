@@ -1,5 +1,7 @@
 package com.myMall.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.myMall.common.ResponseCode;
 import com.myMall.common.ServerResponse;
 import com.myMall.dao.CategoryMapper;
@@ -10,9 +12,14 @@ import com.myMall.service.IProductService;
 import com.myMall.util.DateTimeUtil;
 import com.myMall.util.PropertiesUtil;
 import com.myMall.vo.ProductDetailVO;
+import com.myMall.vo.ProductListVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("iProductService")
 public class ProductService implements IProductService {
@@ -66,6 +73,22 @@ public class ProductService implements IProductService {
         return ServerResponse.createBySuccess(productDetailVO);
     }
 
+    public ServerResponse getProductList(int pageNum, int pageSize) {
+        /**
+         * 1, startPage -- start
+         * 2, 填充sql查询逻辑
+         * 3, pageHelper 填充返回数据
+         */
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productMapper.getProductList();
+        List<ProductListVO> resultList = new ArrayList<>();
+        for(Product p : productList) {
+            resultList.add(assembleListVO(p));
+        }
+        PageInfo<ProductListVO> pageResult = new PageInfo<>(resultList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
     // 装配productDetailVO
     private ProductDetailVO assembleWithProduct(Product product) {
         ProductDetailVO productDetailVo = new ProductDetailVO();
@@ -89,6 +112,20 @@ public class ProductService implements IProductService {
         productDetailVo.setCreateTime(DateTimeUtil.dateToStr(product.getCreateTime()));
         productDetailVo.setUpdateTime(DateTimeUtil.dateToStr(product.getUpdateTime()));
         return productDetailVo;
+    }
+
+    // 装配productListVO
+    private ProductListVO assembleListVO(Product product) {
+        ProductListVO listVO = new ProductListVO();
+        listVO.setId(product.getId());
+        listVO.setCategoryId(product.getCategoryId());
+        listVO.setName(product.getName());
+        listVO.setSubtitle(product.getSubtitle());
+        listVO.setMainImage(product.getMainImage());
+        listVO.setPrice(product.getPrice());
+        listVO.setStatus(product.getStatus());
+        listVO.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happymmall.com/"));
+        return listVO;
     }
 }
 

@@ -4,6 +4,7 @@ import com.myMall.common.ServerResponse;
 import com.myMall.pojo.Product;
 import com.myMall.service.IProductService;
 import com.myMall.vo.ProductDetailVO;
+import net.sf.jsqlparser.schema.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +40,10 @@ public class ProductManagerController {
         return iProductService.getProductDetail(productId);
     }
 
+    @RequestMapping(value = "get_product_list.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse getProductList(int pageNum, int pageSize) {
+        return iProductService.getProductList(pageNum, pageSize);
+    }
 
 }
