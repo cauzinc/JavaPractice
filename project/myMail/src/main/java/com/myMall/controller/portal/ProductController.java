@@ -31,8 +31,8 @@ public class ProductController {
             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
             @RequestParam(value = "categoryId", required = false) Integer categoryId,
-            @RequestParam(value = "pageNum", required = false) String keyword,
-            @RequestParam(value = "pageNum", defaultValue = "") String sort) {
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "sort", defaultValue = "") String sort) {
         return iProductService.searchProductListForUser(pageSize, pageNum, keyword, sort, categoryId);
     }
 }

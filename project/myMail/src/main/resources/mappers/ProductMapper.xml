@@ -211,16 +211,17 @@
   </select>
 
   <!-- 使用foreach 标签来对传入的集合对象进行遍历, 语法类似于vue中的for循环语法 -->
-  <select id="serchProductListByCategoryIds" resultMap="BaseResultMap" parameterType="map">
+  <select id="searchProductListByCategoryIds" resultMap="BaseResultMap" parameterType="map">
     select
     <include refid="Base_Column_List" />
+    from mmall_product
     where status = 1
     <if test="keyword != null">
         and name like #{keyword}
     </if>
     <if test="categoryIdList != null">
         and category_id in
-        <foreach collection="categoryIdList" item="item" index="index" open="(" close=")" separator=",">
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
             #{item}
         </foreach>
     </if>

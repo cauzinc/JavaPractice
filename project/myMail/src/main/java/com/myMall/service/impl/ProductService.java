@@ -107,18 +107,23 @@ public class ProductService implements IProductService {
 
     // 给用户端的搜索接口
     public ServerResponse<PageInfo> searchProductListForUser(Integer pageSize, Integer pageNum, String keyword, String sort, Integer categoryId) {
+
         if(StringUtils.isBlank(keyword) && categoryId == null) {
             return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
         }
-        // 加入没有改分类，则返回错误
-        if(categoryId != null && categoryMapper.selectByPrimaryKey(categoryId) == null) {
-            return ServerResponse.createBySuccessByMessage("没有该分类");
-        }
-        // 处理sql查询的参数
-        List<Category> categoryList = iCategoryService.getCategory(categoryId, true).getData();
         List<Integer> categoryIdList = new ArrayList<>();   // 用id集合来进行sql检索
-        for(Category c : categoryList) {
-            categoryIdList.add(c.getId());
+        // 加入没有改分类，则返回错误
+        if(categoryId != null) {
+            Category cate = categoryMapper.selectByPrimaryKey(categoryId);
+            if(cate== null) {
+                return ServerResponse.createBySuccessByMessage("没有该分类");
+            }
+            List<Category> categoryList = iCategoryService.getCategory(cate.getParentId(), true).getData();
+            if(categoryList != null) {
+                for(Category c : categoryList) {
+                    categoryIdList.add(c.getId());
+                }
+            }
         }
 
         if(StringUtils.isNotBlank(keyword)) {
@@ -131,7 +136,11 @@ public class ProductService implements IProductService {
             sort = sort.replace("_", " ");
             PageHelper.orderBy(sort);   // pageHelper在sql语句后自动增加排序查询
         }
-        List<Product> productList = productMapper.searchProductListByCategoryIds(categoryIdList, keyword);
+
+        // 当categoryIdList中没有内容时，务必要换成Null，否则会拼装错误的sql语句
+        List<Product> productList = productMapper.searchProductListByCategoryIds(
+                categoryIdList.size() == 0 ? null : categoryIdList,
+                StringUtils.isBlank(keyword) ? null : keyword);
         List<ProductListVO> productVOList = assembleListVO(productList);
 
         PageInfo<ProductListVO> pageInfo = new PageInfo<>(productVOList);
