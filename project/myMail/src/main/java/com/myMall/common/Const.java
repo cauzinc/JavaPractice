@@ -1,5 +1,9 @@
 package com.myMall.common;
 
+import com.google.common.collect.Sets;
+
+import java.util.Set;
+
 // 常量类
 public class Const {
     public static final String CURRENT_USER = "currentUser";
@@ -14,4 +18,30 @@ public class Const {
     // data need to be validated
     public static final String USERNAME = "username";
     public static final String EMAIL = "email";
+
+    // 价格排序的规则, 使用set的保存方式, 搜索的复杂度比list要低 O(n) - O(1)
+    public interface ProductListOrderRule {
+        Set<String> PRICE_RULE_SET = Sets.newHashSet("price_asc", "price_desc");
+    }
+
+    // 产品状态
+    public enum ProductStatement {
+        ONBOARD("上架中", 1),
+        OFFBOARD("已下架", 0);
+        private String desc;
+        private Integer state;
+
+        ProductStatement(String desc, Integer state) {
+            this.desc = desc;
+            this.state = state;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public Integer getState() {
+            return state;
+        }
+    }
 }
