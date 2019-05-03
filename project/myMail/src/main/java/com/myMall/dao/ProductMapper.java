@@ -22,4 +22,7 @@ public interface ProductMapper {
     List<Product> getProductList();
 
     List<Product> searchProductList(@Param(value = "productId") Integer productId, @Param(value = "productName") String productName);
+
+    List<Product> searchProductListByCategoryIds(@Param(value = "categoryIdList") List<Integer> categoryIdList,
+                                                @Param(value = "keyword") String keyword);
 }

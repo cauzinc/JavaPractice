@@ -2,6 +2,7 @@ package com.myMall.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.myMall.common.Const;
 import com.myMall.common.ResponseCode;
 import com.myMall.common.ServerResponse;
 import com.myMall.dao.CategoryMapper;
@@ -31,6 +32,12 @@ public class ProductService implements IProductService {
 
     private ProductMapper productMapper;
     private CategoryMapper categoryMapper;
+    private CategoryService iCategoryService;
+
+    @Autowired
+    public void setiCategoryService(CategoryService iCategoryService) {
+        this.iCategoryService = iCategoryService;
+    }
 
     public ServerResponse saveOrUpdateProduct(Product product) {
         if(product == null) {
@@ -89,12 +96,46 @@ public class ProductService implements IProductService {
     public ServerResponse searchProductList(int pageNum, int pageSize, Integer productId, String productName) {
         PageHelper.startPage(pageNum, pageSize);
         if(StringUtils.isNotBlank(productName)){
+            // 模糊搜索，记得用%进行包裹
             productName = new StringBuilder().append("%").append(productName).append("%").toString();
         }
         List<Product> productList = productMapper.searchProductList(productId, productName);
         List<ProductListVO> resultList = assembleListVO(productList);
         PageInfo<ProductListVO> pageResult = new PageInfo<>(resultList);
         return ServerResponse.createBySuccess(pageResult);
+    }
+
+    // 给用户端的搜索接口
+    public ServerResponse<PageInfo> searchProductListForUser(Integer pageSize, Integer pageNum, String keyword, String sort, Integer categoryId) {
+        if(StringUtils.isBlank(keyword) && categoryId == null) {
+            return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
+        }
+        // 加入没有改分类，则返回错误
+        if(categoryId != null && categoryMapper.selectByPrimaryKey(categoryId) == null) {
+            return ServerResponse.createBySuccessByMessage("没有该分类");
+        }
+        // 处理sql查询的参数
+        List<Category> categoryList = iCategoryService.getCategory(categoryId, true).getData();
+        List<Integer> categoryIdList = new ArrayList<>();   // 用id集合来进行sql检索
+        for(Category c : categoryList) {
+            categoryIdList.add(c.getId());
+        }
+
+        if(StringUtils.isNotBlank(keyword)) {
+            keyword = "%" + keyword + "%";
+        }
+        PageHelper.startPage(pageNum, pageSize);
+
+        // 排序处理
+        if(StringUtils.isNotBlank(sort) && Const.ProductListOrderRule.PRICE_RULE_SET.contains(sort)) {
+            sort = sort.replace("_", " ");
+            PageHelper.orderBy(sort);   // pageHelper在sql语句后自动增加排序查询
+        }
+        List<Product> productList = productMapper.searchProductListByCategoryIds(categoryIdList, keyword);
+        List<ProductListVO> productVOList = assembleListVO(productList);
+
+        PageInfo<ProductListVO> pageInfo = new PageInfo<>(productVOList);
+        return ServerResponse.createBySuccess(pageInfo);
     }
 
     // 装配productDetailVO
