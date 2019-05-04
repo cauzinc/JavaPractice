@@ -81,6 +81,17 @@ public class CartController {
         }
         return iCartService.selectOrUnselect(user.getId(), null,  checked);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "get_count.do", method = RequestMethod.GET)
+    public ServerResponse getProductCountInCart(HttpSession session) {
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorByMessage("请先登录");
+        }
+        return iCartService.getProductCountInCart(user.getId());
+    }
+
 }
 
 

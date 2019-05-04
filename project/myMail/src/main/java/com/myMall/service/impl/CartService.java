@@ -112,6 +112,14 @@ public class CartService implements ICartService {
         return ServerResponse.createBySuccess(result);
     }
 
+    public ServerResponse<Integer> getProductCountInCart(Integer userId) {
+        if(userId == null) {
+            return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
+        }
+        Integer count = cartMapper.getProductCountInCart(userId);
+        return ServerResponse.createBySuccess(count);
+    }
+
 
     // 获取CartVO以及计算用户购物车中的货物是否有库存
     private CartVo getCartVOByUserId(Integer userId) {
