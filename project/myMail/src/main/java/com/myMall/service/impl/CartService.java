@@ -13,11 +13,14 @@ import com.myMall.util.BigDecimalUtil;
 import com.myMall.util.PropertiesUtil;
 import com.myMall.vo.CartProductVo;
 import com.myMall.vo.CartVo;
+import net.sf.jsqlparser.schema.Server;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service("iCartService")
@@ -34,6 +37,7 @@ public class CartService implements ICartService {
         this.productMapper = productMapper;
     }
 
+    // 添加到购物车
     public ServerResponse<CartVo> add(Integer userId, Integer productId, Integer count) {
         // 检查参数
         if(productId == null) {
@@ -57,6 +61,57 @@ public class CartService implements ICartService {
         CartVo userCartVO = getCartVOByUserId(userId);
         return ServerResponse.createBySuccess(userCartVO);
     }
+
+    // 修改购物车数量
+    public ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count) {
+        // 检查参数
+        if(productId == null) {
+            return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
+        }
+        // 更新数量
+        Cart updateItem = cartMapper.getUserCartItem(userId, productId);
+        if(updateItem != null) {
+            updateItem.setQuantity(count + updateItem.getQuantity());
+        }
+        cartMapper.updateByPrimaryKeySelective(updateItem);
+
+        // 返回cartVO
+        CartVo result = getCartVOByUserId(userId);
+        return ServerResponse.createBySuccess(result);
+    }
+
+    // 删除购物车中的商品
+    public ServerResponse<CartVo> delete(Integer userId, Integer[] productIds) {
+        // 检查参数
+        List<Integer> productIdList = Arrays.asList(productIds);
+        if(CollectionUtils.isEmpty(productIdList)) {
+            return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
+        }
+
+        // 删除产品
+        cartMapper.deleteProducts(userId, productIdList);
+
+        // 返回cartVo
+        CartVo result = getCartVOByUserId(userId);
+        return ServerResponse.createBySuccess(result);
+    }
+
+    /**
+     * 选中、取消选中； 全选、取消全选
+     * @param userId
+     * @param productId 如果没有传则表示全选或者取消全选
+     * @param checked 选中或者取消选中状态
+     * @return
+     */
+    public ServerResponse<CartVo> selectOrUnselect(Integer userId, Integer productId, Integer checked) {
+        if(userId == null) {
+            return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
+        }
+        cartMapper.selectOrUnselect(userId, productId, checked);
+        CartVo result = getCartVOByUserId(userId);
+        return ServerResponse.createBySuccess(result);
+    }
+
 
     // 获取CartVO以及计算用户购物车中的货物是否有库存
     private CartVo getCartVOByUserId(Integer userId) {

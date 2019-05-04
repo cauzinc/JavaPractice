@@ -3,7 +3,9 @@ package com.myMall.controller.portal;
 import com.myMall.common.Const;
 import com.myMall.common.ServerResponse;
 import com.myMall.pojo.User;
+import com.myMall.service.ICartService;
 import com.myMall.service.impl.CartService;
+import com.myMall.vo.CartVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/cart/")
 public class CartController {
-    private CartService iCartService;
+    private ICartService iCartService;
     @Autowired
     public void setiCartService(CartService iCartService) {
         this.iCartService = iCartService;
@@ -33,4 +35,54 @@ public class CartController {
 
         return iCartService.add(user.getId(), productId, count);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "update.do", method = RequestMethod.POST)
+    public ServerResponse update(HttpSession session, Integer productId,
+                              @RequestParam(value = "count", defaultValue = "1") Integer count) {
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorByMessage("请先登录");
+        }
+
+        return iCartService.update(user.getId(), productId, count);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "delete.do", method = RequestMethod.POST)
+    public ServerResponse delete(HttpSession session, Integer[] productIds) {
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorByMessage("请先登录");
+        }
+
+        return iCartService.delete(user.getId(), productIds);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "select_one.do", method = RequestMethod.POST)
+    public ServerResponse selectOne(HttpSession session, Integer productId,
+                                 @RequestParam(value = "checked", defaultValue = "1") Integer checked) {
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorByMessage("请先登录");
+        }
+        return iCartService.selectOrUnselect(user.getId(), productId,  checked);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "select_all.do", method = RequestMethod.POST)
+    public ServerResponse selectAll(HttpSession session,
+                                 @RequestParam(value = "checked", defaultValue = "1") Integer checked) {
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null) {
+            return ServerResponse.createByErrorByMessage("请先登录");
+        }
+        return iCartService.selectOrUnselect(user.getId(), null,  checked);
+    }
 }
+
+
+
+
