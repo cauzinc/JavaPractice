@@ -69,11 +69,11 @@ public class CartService implements ICartService {
             return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
         }
         // 更新数量
-        Cart updateItem = cartMapper.getUserCartItem(userId, productId);
+        Cart updateItem = cartMapper.getUserCartItem(productId, userId);
         if(updateItem != null) {
-            updateItem.setQuantity(count + updateItem.getQuantity());
+            updateItem.setQuantity(count);
         }
-        cartMapper.updateByPrimaryKeySelective(updateItem);
+        cartMapper.updateByPrimaryKey(updateItem);
 
         // 返回cartVO
         CartVo result = getCartVOByUserId(userId);
@@ -83,6 +83,9 @@ public class CartService implements ICartService {
     // 删除购物车中的商品
     public ServerResponse<CartVo> delete(Integer userId, Integer[] productIds) {
         // 检查参数
+        if(productIds == null) {
+            return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
+        }
         List<Integer> productIdList = Arrays.asList(productIds);
         if(CollectionUtils.isEmpty(productIdList)) {
             return ServerResponse.createByErrorByErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");

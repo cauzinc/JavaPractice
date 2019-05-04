@@ -101,7 +101,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null">
-        now(),
+        update_time = now(),
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -153,8 +153,8 @@
   <update id="selectOrUnselect" parameterType="map">
     update mmall_cart
     set checked = #{checked},
-        update_time = now(),
-    where user_id = #{userId},
+        update_time = now()
+    where user_id = #{userId}
     <if test="productId != null">
       and product_id = #{productId}
     </if>
@@ -166,7 +166,7 @@
     也可以用iFNULL语句来处理
    -->
   <select id="getProductCountInCart" parameterType="int" resultType="int">
-    select IFNULL(sum(quantity)) as count
+    select IFNULL(sum(quantity), 0) as count
     from mmall_cart
     where user_id = #{userId}
   </select>
