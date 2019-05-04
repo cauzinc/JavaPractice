@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/cart/")
 public class CartController {
-    CartService iCartService;
+    private CartService iCartService;
     @Autowired
     public void setiCartService(CartService iCartService) {
         this.iCartService = iCartService;

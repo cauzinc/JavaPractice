@@ -22,8 +22,8 @@ import java.util.List;
 
 @Service("iCartService")
 public class CartService implements ICartService {
-    CartMapper cartMapper;
-    ProductMapper productMapper;
+    private CartMapper cartMapper;
+    private ProductMapper productMapper;
 
     @Autowired
     public void setCartMapper(CartMapper cartMapper) {
@@ -53,8 +53,9 @@ public class CartService implements ICartService {
             cart.setQuantity(count);
             cartMapper.updateByPrimaryKeySelective(cart);
         }
-
-        return null;
+        // 返回用户的购物车cartVO对象
+        CartVo userCartVO = getCartVOByUserId(userId);
+        return ServerResponse.createBySuccess(userCartVO);
     }
 
     // 获取CartVO以及计算用户购物车中的货物是否有库存
