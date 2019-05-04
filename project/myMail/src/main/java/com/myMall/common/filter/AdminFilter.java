@@ -30,6 +30,9 @@ public class AdminFilter {
     @Pointcut("execution(public * com.myMall.controller.backend.*ManagerController.*(..)) && !execution(public * com.myMall.controller.backend.UserManagerController.login(..))")
     public void CategoryManagerFilter() { }
 
+    @Pointcut("execution(public * com.myMall.controller.portal.CartController.*(..))")
+    public void CartManagerFilter() { }
+
     // 检查用户是否为管理员
     @Around("CategoryManagerFilter()")
     public ServerResponse adminAuth(ProceedingJoinPoint pjp) {
@@ -46,6 +49,24 @@ public class AdminFilter {
                 e.printStackTrace();
             }
         }
+        return response;
+    }
+
+    // 检查用户是否登录
+    @Around("CartManagerFilter()")
+    public ServerResponse loginAuth(ProceedingJoinPoint pjp) {
+        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        if(user != null) {
+            try {
+                return (ServerResponse) pjp.proceed();
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+        ServerResponse response = ServerResponse.createByErrorByErrorCode(ResponseCode.NEED_LOGIN.getCode(), "用户未登录");
         return response;
     }
 

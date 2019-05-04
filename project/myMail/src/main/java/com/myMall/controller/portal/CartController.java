@@ -29,9 +29,6 @@ public class CartController {
     public ServerResponse add(HttpSession session, Integer productId,
                               @RequestParam(value = "count", defaultValue = "1") Integer count) {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null) {
-            return ServerResponse.createByErrorByMessage("请先登录");
-        }
 
         return iCartService.add(user.getId(), productId, count);
     }
@@ -41,9 +38,6 @@ public class CartController {
     public ServerResponse update(HttpSession session, Integer productId,
                               @RequestParam(value = "count", defaultValue = "1") Integer count) {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null) {
-            return ServerResponse.createByErrorByMessage("请先登录");
-        }
 
         return iCartService.update(user.getId(), productId, count);
     }
@@ -52,9 +46,6 @@ public class CartController {
     @RequestMapping(value = "delete.do", method = RequestMethod.POST)
     public ServerResponse delete(HttpSession session, Integer[] productIds) {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null) {
-            return ServerResponse.createByErrorByMessage("请先登录");
-        }
 
         return iCartService.delete(user.getId(), productIds);
     }
@@ -65,9 +56,6 @@ public class CartController {
     public ServerResponse selectOne(HttpSession session, Integer productId,
                                  @RequestParam(value = "checked", defaultValue = "1") Integer checked) {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null) {
-            return ServerResponse.createByErrorByMessage("请先登录");
-        }
         return iCartService.selectOrUnselect(user.getId(), productId,  checked);
     }
 
@@ -76,9 +64,6 @@ public class CartController {
     public ServerResponse selectAll(HttpSession session,
                                  @RequestParam(value = "checked", defaultValue = "1") Integer checked) {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null) {
-            return ServerResponse.createByErrorByMessage("请先登录");
-        }
         return iCartService.selectOrUnselect(user.getId(), null,  checked);
     }
 
@@ -86,9 +71,6 @@ public class CartController {
     @RequestMapping(value = "get_count.do", method = RequestMethod.GET)
     public ServerResponse getProductCountInCart(HttpSession session) {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null) {
-            return ServerResponse.createByErrorByMessage("请先登录");
-        }
         return iCartService.getProductCountInCart(user.getId());
     }
 
