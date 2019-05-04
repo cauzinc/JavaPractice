@@ -36,7 +36,7 @@ public class AdminFilter {
     public void ShippingManagerFilter() { }
 
     // 检查用户是否为管理员
-    @Around("CategoryManagerFilter()")
+    @Around("CategoryManagerFilter() || ShippingManagerFilter()")
     public ServerResponse adminAuth(ProceedingJoinPoint pjp) {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
@@ -55,7 +55,7 @@ public class AdminFilter {
     }
 
     // 检查用户是否登录
-    @Around("CartManagerFilter() && ShippingManagerFilter()")
+    @Around("CartManagerFilter()")
     public ServerResponse loginAuth(ProceedingJoinPoint pjp) {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
