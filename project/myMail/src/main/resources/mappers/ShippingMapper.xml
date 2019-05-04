@@ -229,7 +229,7 @@
     and user_id = #{userId}
   </update>
 
-  <select id="selectByUserId" resultType="map" parameterType="map">
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="map">
     select
     <include refid="Base_Column_List" />
     from mmall_shipping
@@ -240,6 +240,7 @@
   <select id="getUserShippingList" parameterType="int" resultType="map">
     select
     <include refid="Base_Column_List" />
+    from mmall_shipping
     where user_id = #{userId}
   </select>
 </mapper>

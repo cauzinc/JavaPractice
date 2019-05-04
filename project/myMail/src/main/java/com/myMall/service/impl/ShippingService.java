@@ -10,6 +10,7 @@ import com.myMall.pojo.Shipping;
 import com.myMall.service.IShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -64,8 +65,8 @@ public class ShippingService implements IShippingService {
 
     public ServerResponse selectAll(int pageNum, int pageSize, Integer userId) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Shipping> shippingList = Lists.newArrayList();
-        PageInfo pageInfo = new PageInfo(shippingList);
+        List<Shipping> shippingList = shippingMapper.getUserShippingList(userId);
+        PageInfo<Shipping> pageInfo = new PageInfo<>(shippingList);
         return ServerResponse.createBySuccess(pageInfo);
     }
 
