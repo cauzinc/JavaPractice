@@ -21,6 +21,7 @@ import com.alipay.demo.trade.service.impl.AlipayTradeServiceImpl;
 import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.alipay.demo.trade.utils.Utils;
 import com.alipay.demo.trade.utils.ZxingUtils;
+import com.myMall.util.AlipayUtil;
 import org.apache.commons.lang.StringUtils;
 //import org.apache.commons.logging.Log;
 //import org.apache.commons.logging.LogFactory;
@@ -64,18 +65,6 @@ public class Main {
         monitorService = new AlipayMonitorServiceImpl.ClientBuilder()
             .setGatewayUrl("http://mcloudmonitor.com/gateway.do").setCharset("GBK")
             .setFormat("json").build();
-    }
-
-    // 简单打印应答
-    private void dumpResponse(AlipayResponse response) {
-        if (response != null) {
-            log.info(String.format("code:%s, msg:%s", response.getCode(), response.getMsg()));
-            if (StringUtils.isNotEmpty(response.getSubCode())) {
-                log.info(String.format("subCode:%s, subMsg:%s", response.getSubCode(),
-                    response.getSubMsg()));
-            }
-            log.info("body:" + response.getBody());
-        }
     }
 
     public static void main(String[] args) {
@@ -160,7 +149,7 @@ public class Main {
         ;
 
         MonitorHeartbeatSynResponse response = monitorService.heartbeatSyn(builder);
-        dumpResponse(response);
+        AlipayUtil.dumpResponse(response);
     }
 
     // POS厂商的调用样例，填写了所有pos厂商需要填写的字段
@@ -199,7 +188,7 @@ public class Main {
         ;
 
         MonitorHeartbeatSynResponse response = monitorService.heartbeatSyn(builder);
-        dumpResponse(response);
+        AlipayUtil.dumpResponse(response);
     }
 
     // 测试当面付2.0支付
@@ -305,7 +294,7 @@ public class Main {
                 log.info("查询返回该订单支付成功: )");
 
                 AlipayTradeQueryResponse response = result.getResponse();
-                dumpResponse(response);
+                AlipayUtil.dumpResponse(response);
 
                 log.info(response.getTradeStatus());
                 if (Utils.isListNotEmpty(response.getFundBillList())) {
@@ -436,7 +425,7 @@ public class Main {
                 log.info("支付宝预下单成功: )");
 
                 AlipayTradePrecreateResponse response = result.getResponse();
-                dumpResponse(response);
+                AlipayUtil.dumpResponse(response);
 
                 // 需要修改为运行机器上的路径
                 String filePath = String.format("/Users/sudo/Desktop/qr-%s.png",
