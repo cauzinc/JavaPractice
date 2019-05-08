@@ -18,6 +18,8 @@ Project/myMail/target/
 #idea
 Project/myMail/.idea/
 /Project/myMail/idea/
+Project/JapanBusinessProjectSample/.idea/
+/Project/JapanBusinessProjectSample/idea/
 *.ipr
 *.iml
 *.iws
