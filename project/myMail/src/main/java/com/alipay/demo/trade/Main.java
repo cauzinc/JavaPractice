@@ -22,8 +22,10 @@ import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.alipay.demo.trade.utils.Utils;
 import com.alipay.demo.trade.utils.ZxingUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -33,7 +35,7 @@ import java.util.*;
  * sdk和demo的意见和问题反馈请联系：liuyang.kly@alipay.com
  */
 public class Main {
-    private static Log                  log = LogFactory.getLog(Main.class);
+    private static Logger log = LoggerFactory.getLogger(Main.class);
 
     // 支付宝当面付2.0服务
     private static AlipayTradeService   tradeService;
@@ -48,7 +50,7 @@ public class Main {
         /** 一定要在创建AlipayTradeService之前调用Configs.init()设置默认参数
          *  Configs会读取classpath下的zfbinfo.properties文件配置信息，如果找不到该文件则确认该文件是否在classpath目录
          */
-        Configs.init("zfbinfo.properties");
+        Configs.init("alipayInfo.properties");
 
         /** 使用Configs提供的默认参数
          *  AlipayTradeService可以使用单例或者为静态成员对象，不需要反复new
@@ -77,6 +79,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        System.out.println("start logging!");
+        log.debug("log test...");
+        log.info("log test...");
+        log.error("fail!!!");
+        System.out.println("stop logging!");
         Main main = new Main();
 
         // 系统商商测试交易保障接口api
