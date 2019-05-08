@@ -34,6 +34,8 @@ public class AdminFilter {
     public void CartManagerFilter() { }
     @Pointcut("execution(public * com.myMall.controller.portal.ShippingController.*(..))")
     public void ShippingManagerFilter() { }
+    @Pointcut("execution(public * com.myMall.controller.portal.OrderController.*(..))")
+    public void OrderManagerFilter() { }
 
     // 检查用户是否为管理员
     @Around("CategoryManagerFilter() || ShippingManagerFilter()")
@@ -55,7 +57,7 @@ public class AdminFilter {
     }
 
     // 检查用户是否登录
-    @Around("CartManagerFilter()")
+    @Around("CartManagerFilter() || OrderManagerFilter()")
     public ServerResponse loginAuth(ProceedingJoinPoint pjp) {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession();
