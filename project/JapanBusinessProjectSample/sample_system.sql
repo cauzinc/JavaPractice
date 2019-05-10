@@ -10,7 +10,7 @@ CREATE TABLE `sample_business` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `business_name` varchar(20) NOT NULL,
     `business_tel` varchar(20) NOT NULL,
-    `business_fax` varchar(20) NOT NULL,
+    `business_fax` varchar(20) DEFAULT NULL,
     `website` varchar(20) DEFAULT NULL,
 
     `address` varchar(20) DEFAULT NULL,
