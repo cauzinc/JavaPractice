@@ -122,7 +122,7 @@ public class PrincipleImple implements IPrincipleDao {
 
     public Principle getPrincipleById(Integer id) {
         Connection conn = DBUtil.getConn();
-        String sql = "SELECT * FROM sample_business WHERE id=?";
+        String sql = "SELECT * FROM sample_principle WHERE id=?";
         Principle principle = new Principle();
         try {
             PreparedStatement ptmt = conn.prepareStatement(sql);

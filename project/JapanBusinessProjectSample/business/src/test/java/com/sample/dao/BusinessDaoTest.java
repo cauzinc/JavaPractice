@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class DaoTest {
+public class BusinessDaoTest {
     private static IBusinessDao businessDao = new BusinessImpl();
 
     @Test
