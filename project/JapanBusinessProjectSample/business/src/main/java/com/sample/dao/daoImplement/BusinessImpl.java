@@ -176,7 +176,6 @@ public class BusinessImpl implements IBusinessDao {
             ptmt.setInt(19, business.getStatus());
             ptmt.setString(20, "admin");
             ptmt.setInt(21, business.getId());
-            System.out.println("sql: " + sql);
 
             ptmt.execute();
         } catch (Exception e) {
