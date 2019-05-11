@@ -67,14 +67,14 @@ public class BusinessImpl implements IBusinessDao {
      */
     public void insertBusiness(Business newItem) {
         Connection conn = DBUtil.getConn();
-        String[] fields = {"businessName", "businessTel", "businessFax", "website", "address", "postcode", "advantageField",
-                "bankName", "bankBranchName", "bankNumber", "bankRepresent", "stuffNum", "annualSales", "transactionDeadline",
-                "paymentSight", "accountKind", "comment", "principalId", "status", "createUser", "updateUser", "createTime", "updateTime"};
+        String[] fields = {"business_name", "business_tel", "business_fax", "website", "address", "postcode", "advantage_field",
+                "bank_name", "bank_branch_name", "bank_number", "bank_represent", "stuff_num", "annual_sales", "transaction_deadline",
+                "payment_sight", "account_kind", "comment", "principal_id", "status", "create_user", "update_user", "create_time", "update_time"};
         // generate sql sentence
         String[] values = new String[fields.length];
 
         for(int i = 0; i < fields.length; i ++) {
-            values[i] = (!"createTime".equals(fields[i]) && !"updateTime".equals(fields[i])) ? "?" : "current_time()";
+            values[i] = (!"create_time".equals(fields[i]) && !"update_time".equals(fields[i])) ? "?" : "current_time()";
         }
         String sql ="INSERT INTO sample_business (" +
                 String.join(",", fields) + ")" +
@@ -145,12 +145,13 @@ public class BusinessImpl implements IBusinessDao {
 
     public void updateBusiness(Business business) {
         Connection conn = DBUtil.getConn();
-        String[] updateFields = {"businessName=?", "businessTel=?", "businessFax=?", "website=?", "address=?", "postcode=?", "advantageField=?",
-                "bankName=?", "bankBranchName=?", "bankNumber=?", "bankRepresent=?", "stuffNum=?", "annualSales=?", "transactionDeadline=?",
-                "paymentSight=?", "accountKind=?", "comment=?", "principalId=?", "status=?", "updateUser=?", "updateTime=current_time()"};
-        String sql = "UPDATE sample_business SET" +
-                "(" + String.join(",", updateFields) + ")" +
+        String[] updateFields = {"business_name=?", "business_tel=?", "business_fax=?", "website=?", "address=?", "postcode=?", "advantage_field=?",
+                "bank_name=?", "bank_branch_name=?", "bank_number=?", "bank_represent=?", "stuff_num=?", "annual_sales=?", "transaction_deadline=?",
+                "payment_sight=?", "account_kind=?", "comment=?", "principal_id=?", "status=?", "update_user=?", "update_time=current_time()"};
+        String sql = "UPDATE sample_business SET " +
+                String.join(",", updateFields) +
                 "where id = ?";
+
         try {
             PreparedStatement ptmt = conn.prepareStatement(sql);
 
@@ -175,6 +176,8 @@ public class BusinessImpl implements IBusinessDao {
             ptmt.setInt(19, business.getStatus());
             ptmt.setString(20, "admin");
             ptmt.setInt(21, business.getId());
+            System.out.println("sql: " + sql);
+
             ptmt.execute();
         } catch (Exception e) {
             e.printStackTrace();

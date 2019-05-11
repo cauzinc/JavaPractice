@@ -41,7 +41,7 @@ public class DaoUtils {
             Method setValueMethod = source.getMethod(setFieldMethodName, returnType);
             Method getValueMethod = ResultSet.class.getMethod(getFieldMethodName, String.class);
             // 3、 etc. obj.setUser_name(rs.getString("user_name"));
-            setValueMethod.invoke(ts, getValueMethod.invoke(rs, fieldName));
+            setValueMethod.invoke(ts, getValueMethod.invoke(rs, humpToLine(fieldName)));
         }
 
         return ts;
@@ -60,4 +60,14 @@ public class DaoUtils {
         result = result.substring(0,1).toUpperCase() + result.substring(1);
         return result;
     }
+
+    /**
+     * change connection way of hump word
+     * @param str example: myName
+     * @return example: my_name
+     */
+    public static String humpToLine(String str) {
+        return str.replaceAll("[A-Z]", "_$0").toLowerCase();
+    }
+
 }

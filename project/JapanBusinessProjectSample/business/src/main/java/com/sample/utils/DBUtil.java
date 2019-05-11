@@ -14,11 +14,9 @@ public class DBUtil {
     private static Statement statement = null;
 
     static {
-        System.out.println("loaded");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("connected");
         } catch (Exception e) {
             System.out.println("connect error");
             e.printStackTrace();
