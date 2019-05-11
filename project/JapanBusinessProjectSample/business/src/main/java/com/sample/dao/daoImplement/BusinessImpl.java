@@ -50,9 +50,50 @@ public class BusinessImpl implements IBusinessDao {
         ptmt.execute();
     }
 
+    /**
+     * insert new data
+     * @param newItem
+     */
+    public void insertBusiness(Business newItem) throws Exception{
+        Connection conn = DBUtil.getConn();
+        String[] fields = {"businessName", "businessTel", "businessFax", "website", "address", "postcode", "advantageField",
+                "bankName", "bankBranchName", "bankNumber", "bankRepresent", "stuffNum", "annualSales", "transactionDeadline",
+                "paymentSight", "accountKind", "comment", "principalId", "status", "createUser", "updateUser", "createTime", "updateTime"};
+        // generate sql sentence
+        String[] values = new String[fields.length];
 
-    public void insertBusiness(Business newItem) {
+        for(int i = 0; i < fields.length; i ++) {
+            values[i] = (!"createTime".equals(fields[i]) && !"updateTime".equals(fields[i])) ? "?" : "current_time()";
+        }
+        String sql ="INSERT INTO sample_business (" +
+                String.join(",", fields) + ")" +
+                "VALUES " +
+                "(" + String.join(",", values) + ")";
 
+        // execute
+        PreparedStatement ptmt = conn.prepareStatement(sql);
+        ptmt.setString(1, newItem.getBusinessName());
+        ptmt.setString(2, newItem.getBusinessTel());
+        ptmt.setString(3, newItem.getBusinessFax());
+        ptmt.setString(4, newItem.getWebsite());
+        ptmt.setString(5, newItem.getAddress());
+        ptmt.setString(6, newItem.getPostcode());
+        ptmt.setString(7, newItem.getAdvantageField());
+        ptmt.setString(8, newItem.getBankName());
+        ptmt.setString(9, newItem.getBankBranchName());
+        ptmt.setString(10, newItem.getBankNumber());
+        ptmt.setString(11, newItem.getBankRepresent());
+        ptmt.setInt(12, newItem.getStuffNum());
+        ptmt.setBigDecimal(13, newItem.getAnnualSales());
+        ptmt.setDate(14, new java.sql.Date(newItem.getTransactionDeadline().getTime()));
+        ptmt.setString(15, newItem.getPaymentSight());
+        ptmt.setString(16, newItem.getAccountKind());
+        ptmt.setString(17, newItem.getComment());
+        ptmt.setInt(18, newItem.getPrincipalId());
+        ptmt.setInt(19, 0);
+        ptmt.setString(20, "admin");
+        ptmt.setString(21, "admin");
+        ptmt.execute();
     }
 
 
@@ -65,6 +106,8 @@ public class BusinessImpl implements IBusinessDao {
     }
 
     public void updateBusiness(Business business) {
-
+        String[] updateFields = {"businessName=?", "businessTel=?", "businessFax=?", "website=?", "address=?", "postcode=?", "advantageField=?",
+                "bankName=?", "bankBranchName=?", "bankNumber=?", "bankRepresent=?", "stuffNum=?", "annualSales=?", "transactionDeadline=?",
+                "paymentSight=?", "accountKind=?", "comment=?", "principalId=?", "status=?", "createUser=?", "updateUser=?", "updateTime=current_time()"};
     }
 }
