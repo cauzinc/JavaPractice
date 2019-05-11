@@ -3,10 +3,12 @@ package com.sample.dao.daoImplement;
 import com.sample.dao.IBusinessDao;
 import com.sample.pojo.Business;
 import com.sample.utils.DBUtil;
+import com.sample.utils.DaoUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,17 +99,59 @@ public class BusinessImpl implements IBusinessDao {
     }
 
 
-    public void deleteBusinessById(Integer id) {
-
+    public void deleteBusinessById(Integer id) throws Exception{
+        Connection conn = DBUtil.getConn();
+        String sql = "DELETE FROM sample_business WHERE id=?";
+        PreparedStatement ptmt = conn.prepareStatement(sql);
+        ptmt.setInt(1, id);
+        ptmt.execute();
     }
 
-    public void getBusinessById(Integer id) {
-
+    public Business getBusinessById(Integer id) throws Exception{
+        Connection conn = DBUtil.getConn();
+        String sql = "SELECT * FROM sample_business WHERE id=?";
+        PreparedStatement ptmt = conn.prepareStatement(sql);
+        ptmt.setInt(1, id);
+        // handle result
+        ResultSet rs = ptmt.executeQuery();
+        Business business = new Business();
+        while(rs.next()) {
+            business = (Business) DaoUtils.fillObject(rs, Business.class);
+        }
+        return business;
     }
 
-    public void updateBusiness(Business business) {
+    public void updateBusiness(Business business) throws Exception{
+        Connection conn = DBUtil.getConn();
         String[] updateFields = {"businessName=?", "businessTel=?", "businessFax=?", "website=?", "address=?", "postcode=?", "advantageField=?",
                 "bankName=?", "bankBranchName=?", "bankNumber=?", "bankRepresent=?", "stuffNum=?", "annualSales=?", "transactionDeadline=?",
-                "paymentSight=?", "accountKind=?", "comment=?", "principalId=?", "status=?", "createUser=?", "updateUser=?", "updateTime=current_time()"};
+                "paymentSight=?", "accountKind=?", "comment=?", "principalId=?", "status=?", "updateUser=?", "updateTime=current_time()"};
+        String sql = "UPDATE sample_business SET" +
+                "(" + String.join(",", updateFields) + ")" +
+                "where id = ?";
+        PreparedStatement ptmt = conn.prepareStatement(sql);
+
+        ptmt.setString(1, business.getBusinessName());
+        ptmt.setString(2, business.getBusinessTel());
+        ptmt.setString(3, business.getBusinessFax());
+        ptmt.setString(4, business.getWebsite());
+        ptmt.setString(5, business.getAddress());
+        ptmt.setString(6, business.getPostcode());
+        ptmt.setString(7, business.getAdvantageField());
+        ptmt.setString(8, business.getBankName());
+        ptmt.setString(9, business.getBankBranchName());
+        ptmt.setString(10, business.getBankNumber());
+        ptmt.setString(11, business.getBankRepresent());
+        ptmt.setInt(12, business.getStuffNum());
+        ptmt.setBigDecimal(13, business.getAnnualSales());
+        ptmt.setDate(14, new java.sql.Date(business.getTransactionDeadline().getTime()));
+        ptmt.setString(15, business.getPaymentSight());
+        ptmt.setString(16, business.getAccountKind());
+        ptmt.setString(17, business.getComment());
+        ptmt.setInt(18, business.getPrincipalId());
+        ptmt.setInt(19, business.getStatus());
+        ptmt.setString(20, "admin");
+        ptmt.setInt(21, business.getId());
+        ptmt.execute();
     }
 }
