@@ -161,4 +161,16 @@ public class OrderService implements IOrderService {
         return ServerResponse.createBySuccess();
     }
 
+    public ServerResponse<Boolean> queryOrderStatus(Long orderNo) {
+        Order order = orderMapper.selectOrderByOrderNo(orderNo);
+        if(order == null) {
+            return ServerResponse.createByErrorByMessage("订单不存在");
+        }
+        if(order.getStatus() >= Const.OrderStatusEnum.PAID.getCode()) {
+            return ServerResponse.createBySuccess(true);
+        } else {
+            return ServerResponse.createByError();
+        }
+    }
+
 }

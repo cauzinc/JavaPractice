@@ -74,6 +74,12 @@ public class OrderController {
                 Const.AlipayCallback.RESPONSE_SUCCESS : Const.AlipayCallback.RESPONSE_FAILED;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "query_order_status.do", method = RequestMethod.GET)
+    public ServerResponse<Boolean> queryOrderStatus(Long orderNo) {
+        boolean ifOrderPaid = iOrderService.queryOrderStatus(orderNo).isSuccess();
+        return ServerResponse.createBySuccess(ifOrderPaid);
+    }
 
 
 

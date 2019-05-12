@@ -8,4 +8,6 @@ public interface IOrderService {
     ServerResponse pay(Integer userId, Long orderNo, String path);
 
     ServerResponse aliCallback(Map<String, String> params);
+
+    ServerResponse<Boolean> queryOrderStatus(Long orderNo);
 }
