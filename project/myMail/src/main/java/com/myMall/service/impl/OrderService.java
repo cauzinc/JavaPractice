@@ -1,18 +1,24 @@
 package com.myMall.service.impl;
 
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.internal.util.AlipayUtils;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.demo.trade.config.Configs;
 import com.alipay.demo.trade.model.result.AlipayF2FPrecreateResult;
 import com.alipay.demo.trade.utils.ZxingUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.myMall.common.Const;
 import com.myMall.common.ServerResponse;
 import com.myMall.dao.OrderItemMapper;
 import com.myMall.dao.OrderMapper;
+import com.myMall.dao.PayInfoMapper;
 import com.myMall.pojo.Order;
 import com.myMall.pojo.OrderItem;
+import com.myMall.pojo.PayInfo;
 import com.myMall.service.IOrderService;
 import com.myMall.util.AlipayUtil;
+import com.myMall.util.DateTimeUtil;
 import com.myMall.util.FTPUtil;
 import com.myMall.util.PropertiesUtil;
 import org.slf4j.Logger;
@@ -27,8 +33,14 @@ import java.util.Map;
 @Service("iOrderService")
 public class OrderService implements IOrderService {
     private OrderMapper orderMapper;
+    private PayInfoMapper payInfoMapper;
     private OrderItemMapper orderItemMapper;
     private static Logger logger = LoggerFactory.getLogger(OrderService.class);
+
+    @Autowired
+    public void setPayInfoMapper(PayInfoMapper payInfoMapper) {
+        this.payInfoMapper = payInfoMapper;
+    }
     @Autowired
     public void setOrderMapper(OrderMapper orderMapper) {
         this.orderMapper = orderMapper;
@@ -73,7 +85,7 @@ public class OrderService implements IOrderService {
                 String fileName = String.format("qr-%s.png", response.getOutTradeNo());
                 logger.info("filePath:" + filePath);
 
-                // 这有什么用？？
+                // 这有什么用？？不处理返回值吗？？
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
                 File targetFile = new File(path, fileName); // 这个file对象不还是空的吗??
 
@@ -102,6 +114,51 @@ public class OrderService implements IOrderService {
 
         logger.error(errorMsg);
         return ServerResponse.createByErrorByMessage(errorMsg);
+    }
+
+
+    public ServerResponse aliCallback(Map<String, String> params) {
+        Long orderNo = Long.valueOf(params.get("out_trade_no"));
+        String tradeNo = params.get("trade_no");
+        String tradeStatus = params.get("trade_status");
+        Order order = orderMapper.selectOrderByOrderNo(orderNo);
+        if(order == null) {
+            return  ServerResponse.createByErrorByMessage("没有该订单, 忽略该回调");
+        }
+        // todo 验证回调是否合法(重要)
+        try{
+            params.remove("sign_type"); // 要去掉这个参数, 签名类型需要我们手动传递
+            boolean alipayRSACheckedV2 = AlipaySignature.rsaCheckV2(params, Configs.getAlipayPublicKey(), "utf-8", Configs.getSignType());  // 通过ali sdk中提供的Configs对象我们可以获取某些关键参数
+            if(!alipayRSACheckedV2) {
+                return ServerResponse.createByErrorByMessage("非法请求！");
+            }
+        } catch (Exception e) {
+            logger.error("支付宝验证回调异常");
+            e.printStackTrace();
+        }
+
+        // todo 避免重复通知(重要), 重复通知的状态也是success
+        if(order.getStatus() >= Const.OrderStatusEnum.PAID.getCode()) {
+            return ServerResponse.createBySuccess("支付宝重复调用");
+        }
+
+        // 更新订单状态
+        if(Const.AlipayCallback.TRADE_STATUS_TRADE_SUCCESS.equals(tradeStatus)) {
+            order.setPaymentTime(DateTimeUtil.strToDate(params.get("gmt_payment")));
+            order.setStatus(Const.OrderStatusEnum.PAID.getCode());
+            orderMapper.updateByPrimaryKeySelective(order);
+        }
+
+        // 生成支付信息PayInfo
+        PayInfo payInfo = new PayInfo();
+        payInfo.setOrderNo(order.getOrderNo());
+        payInfo.setPayPlatform(Const.PayPlatformEnum.ALIPAY.getCode());
+        payInfo.setPlatformNumber(tradeNo);
+        payInfo.setPlatformStatus(tradeStatus);
+        payInfo.setUserId(order.getUserId());
+        payInfoMapper.insert(payInfo);
+
+        return ServerResponse.createBySuccess();
     }
 
 }
