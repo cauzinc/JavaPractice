@@ -81,6 +81,11 @@ public class OrderController {
         return ServerResponse.createBySuccess(ifOrderPaid);
     }
 
-
+    @ResponseBody
+    @RequestMapping(value = "create_order.do", method = RequestMethod.POST)
+    public ServerResponse createOrder(HttpSession session, Integer shippingId) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        return iOrderService.createOrder(user.getId(), shippingId);
+    }
 
 }

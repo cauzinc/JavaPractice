@@ -163,12 +163,20 @@
   <!--
     sum(field) 计算符合条件的field的总和
     但是如果user_id没有的时候会报Null，也可以在java中处理空指针异常
-    也可以用iFNULL语句来处理
+    也可以用IFNULL语句来处理, 如果没哟麦默认返回0
    -->
   <select id="getProductCountInCart" parameterType="int" resultType="int">
     select IFNULL(sum(quantity), 0) as count
     from mmall_cart
     where user_id = #{userId}
+  </select>
+
+  <select id="selectCheckedListByUserId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mmall_cart
+    where user_id = #{userId}
+    and checked = 1
   </select>
 
 </mapper>

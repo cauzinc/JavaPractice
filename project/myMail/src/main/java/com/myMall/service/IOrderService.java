@@ -10,4 +10,6 @@ public interface IOrderService {
     ServerResponse aliCallback(Map<String, String> params);
 
     ServerResponse<Boolean> queryOrderStatus(Long orderNo);
+
+    ServerResponse createOrder(Integer userId, Integer shippingId);
 }
