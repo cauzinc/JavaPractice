@@ -10,8 +10,18 @@ body {
     width: 100%;
 }
 
+p, ul, div {
+    margin: 0;
+    box-sizing: content-box;
+}
+
 ul, li {
     list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: #666;
 }
 
 .clear-fix:after {
