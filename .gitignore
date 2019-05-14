@@ -1,5 +1,8 @@
 *.class
 
+#npm file
+**/node_modules/
+
 #package file
 *.war
 *.ear
