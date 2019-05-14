@@ -25,7 +25,7 @@ public class DaoUtils {
             throws NoSuchMethodException, SecurityException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, InstantiationException {
         Field[] fs = source.getDeclaredFields();	// get all fields of the Class
-        Object ts = source.newInstance();		// create new object without any field initialized
+        Object ts = source.getDeclaredConstructor().newInstance();		// create new object without any field initialized
 
         // obj[set?](rs[get?](?));	there are three varieties to set
         // 1、 field name that is not initialized
