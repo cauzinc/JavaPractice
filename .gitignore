@@ -9,6 +9,8 @@
 
 #maven ignore
 Project/myMail/target/
+Project/JapanBusinessProjectSample/business/target/
+Project/JapanBusinessProjectSample/out/
 
 #eclipse igonore
 .settings/
