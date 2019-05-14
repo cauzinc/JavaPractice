@@ -1,0 +1,28 @@
+html {
+    height: 100%;
+    width: 100%;
+    font-size: 62.5%;
+}
+
+body {
+    color: #666;
+    height: 100%;
+    width: 100%;
+}
+
+ul, li {
+    list-style-type: none;
+}
+
+.clear-fix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+}
+
+.clear-fix {
+    display: inline-block;
+}
