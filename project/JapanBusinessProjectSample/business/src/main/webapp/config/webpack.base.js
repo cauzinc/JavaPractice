@@ -33,12 +33,10 @@ module.exports = {
                 // include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
             },
             {
-                test: /\.(css|postcss)$/,
-                use: ['vue-style-loader', 'css-loader', 'postcss-loader']
-            },
-            {
-                test: /\.(scss|sass)$/,
-                use: ['vue-style-loader', 'css-loader', 'sass-loader', 'postcss-loader', {
+                test: /\.(css|postcss|scss|sass)$/,
+                use: ['vue-style-loader', {
+                    loader: 'css-loader', options: { importLoaders: 1 }
+                }, 'sass-loader', 'postcss-loader', {
                     loader: 'sass-resources-loader',
                     options: {
                         resources: path.resolve(__dirname, './../src/assets/css/variables.scss')
