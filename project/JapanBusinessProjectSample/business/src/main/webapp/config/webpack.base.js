@@ -34,14 +34,28 @@ module.exports = {
             },
             {
                 test: /\.(css|postcss|scss|sass)$/,
-                use: ['vue-style-loader', {
-                    loader: 'css-loader', options: { importLoaders: 1 }
-                }, 'sass-loader', 'postcss-loader', {
-                    loader: 'sass-resources-loader',
-                    options: {
-                        resources: path.resolve(__dirname, './../src/assets/css/variables.scss')
+                // 使用oneOf来同时应用module和scoped规则
+                oneOf: [
+                    {
+                        use: ['vue-style-loader', 'css-loader', 'sass-loader', 'postcss-loader', {
+                            loader: 'sass-resources-loader',
+                            options: {
+                                resources: path.resolve(__dirname, './../src/assets/css/variables.scss')
+                            }
+                        }]
+                    }, {
+                        use: ['vue-style-loader',
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    modules: true,
+                                    localIdentName: '[local]_[hash:base64:5]'
+                                }
+                            }]
                     }
-                }]
+
+                ],
+
             }
         ]
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="common-business-container">
         <div class="title">
             <h4>通常業務</h4>
         </div>
@@ -59,7 +59,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .container {
+    .common-business-container {
         border: 1px solid $main-border-color;
         .title {
             width: 100%;
