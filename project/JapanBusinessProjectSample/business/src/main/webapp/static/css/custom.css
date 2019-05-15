@@ -13,6 +13,8 @@ body {
 p, ul, div {
     margin: 0;
     box-sizing: content-box;
+    /* 消除某些浏览器的默认样式 */
+    padding-inline-start: 0;
 }
 
 ul, li {
