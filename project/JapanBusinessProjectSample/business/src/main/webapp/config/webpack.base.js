@@ -1,7 +1,7 @@
 'use strict'
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -34,16 +34,11 @@ module.exports = {
             },
             {
                 test: /\.(css|postcss|scss|sass)$/,
-                // 使用oneOf来同时应用module和scoped规则
+                // 使用oneOf来同时应用module和scoped规则, 有些相同的Options也要在各自的Loader中进行配置
+                // 使代码易读，可以参照vue-cli把loader options提取到别的文件中实现复用
                 oneOf: [
                     {
-                        use: ['vue-style-loader', 'css-loader', 'sass-loader', 'postcss-loader', {
-                            loader: 'sass-resources-loader',
-                            options: {
-                                resources: path.resolve(__dirname, './../src/assets/css/variables.scss')
-                            }
-                        }]
-                    }, {
+                        resourceQuery: /module/,
                         use: ['vue-style-loader',
                             {
                                 loader: 'css-loader',
@@ -51,7 +46,20 @@ module.exports = {
                                     modules: true,
                                     localIdentName: '[local]_[hash:base64:5]'
                                 }
+                            },'sass-loader','postcss-loader', {
+                                loader: 'sass-resources-loader',
+                                options: {
+                                    resources: path.resolve(__dirname, './../src/assets/css/variables.scss')
+                                }
                             }]
+                    },
+                    {
+                        use: ['vue-style-loader', 'css-loader', 'sass-loader', 'postcss-loader', {
+                            loader: 'sass-resources-loader',
+                            options: {
+                                resources: path.resolve(__dirname, './../src/assets/css/variables.scss')
+                            }
+                        }]
                     }
 
                 ],
