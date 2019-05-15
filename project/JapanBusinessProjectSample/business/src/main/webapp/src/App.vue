@@ -11,11 +11,11 @@
                     <div class="title-box">
                         <span>営業プラス</span>
                     </div>
-                    <ul class="tag-box">
-                        <li class="tag">ホーム</li>
-                    </ul>
+                    <div class="tag-box">
+                        <div @click="select(index)" class="tag" :class="{ active: index === selectedTag }" v-for="(tag, index) in menu">{{tag.name}}</div>
+                    </div>
                     <div class="page-content">
-
+                        <router-view />
                     </div>
                 </div>
 
@@ -34,6 +34,28 @@
             MainHeader,
             BusinessSupportMenu,
             CommonBusiness
+        },
+        data() {
+            return {
+                menu: [
+                    { name: "ホーム", link: "" },
+                    { name: "取引先", link: "" },
+                    { name: "取引先担当者", link: "" },
+                    { name: "スタッフ", link: "" },
+                    { name: "相談", link: "" },
+                    { name: "案件", link: "" },
+                    { name: "契約", link: "" },
+                    { name: "リード", link: "" },
+                    { name: "レポート", link: "" },
+                    { name: "+", link: "" }
+                ],
+                selectedTag: 1
+            }
+        },
+        methods: {
+            select(index) {
+                this.selectedTag = index;
+            }
         }
     }
 </script>
@@ -52,7 +74,36 @@
             }
             .main-content {
                 height: 100%;
-
+                width: 100%;
+                .title-box {
+                    width: 100%;
+                    height: 19px;
+                    background: $topic-color;
+                    border-bottom: 1px solid $main-border-color;
+                    span {
+                        display: inline-block;
+                        padding-left: 20px;
+                        line-height: 20px;
+                    }
+                }
+                .tag-box {
+                    width: 100%;
+                    height: 30px;
+                    border-bottom: 1px solid $main-border-color;
+                    overflow: hidden;
+                    .tag {
+                        display: inline-block;
+                        height: 30px;
+                        min-width: 80px;
+                        padding: 0 5px;
+                        text-align: center;
+                        line-height: 30px;
+                        border-right: 1px solid $main-border-color;
+                    }
+                    .active {
+                        background: $topic-color;
+                    }
+                }
             }
         }
     }

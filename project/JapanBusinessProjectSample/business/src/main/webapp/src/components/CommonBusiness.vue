@@ -78,6 +78,9 @@
             .business-box {
                 .menu-box {
                     margin-bottom: 12px;
+                    ul {
+                        padding-inline-start: 25px;
+                    }
                     li {
                         list-style-type: disc;
                         margin: 5px 0;
