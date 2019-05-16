@@ -26,9 +26,10 @@
 <script>
     export default {
         name: "PortalInfoList",
-        data() {
-            return {
-                infoList: [
+        props: {
+            infoList: {
+                type: Array,
+                default: [
                     { value1: "", value2: "", value3: "" },
                     { value1: "", value2: "", value3: "" },
                     { value1: "", value2: "", value3: "" },
@@ -36,6 +37,11 @@
                     { value1: "", value2: "", value3: "" },
                     { value1: "", value2: "", value3: "" }
                 ]
+            }
+        },
+        data() {
+            return {
+
             }
         }
     }
