@@ -4,14 +4,13 @@ import com.sample.dao.IBusinessDao;
 import com.sample.pojo.Business;
 import com.sample.utils.DBUtil;
 import com.sample.utils.DaoUtils;
+import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class BusinessDaoImpl implements IBusinessDao {
 
     /**
@@ -65,8 +64,9 @@ public class BusinessDaoImpl implements IBusinessDao {
      * insert new data
      * @param newItem
      */
-    public void insertBusiness(Business newItem) {
+    public int insertBusiness(Business newItem) {
         Connection conn = DBUtil.getConn();
+        int insertCount = 0;
         String[] fields = {"business_name", "business_tel", "business_fax", "website", "address", "postcode", "advantage_field",
                 "bank_name", "bank_branch_name", "bank_number", "bank_represent", "stuff_num", "annual_sales", "transaction_deadline",
                 "payment_sight", "account_kind", "comment", "principal_id", "status", "create_user", "update_user", "create_time", "update_time"};
@@ -96,7 +96,13 @@ public class BusinessDaoImpl implements IBusinessDao {
             ptmt.setString(11, newItem.getBankRepresent());
             ptmt.setInt(12, newItem.getStuffNum());
             ptmt.setBigDecimal(13, newItem.getAnnualSales());
-            ptmt.setDate(14, new java.sql.Date(newItem.getTransactionDeadline().getTime()));
+
+            if(newItem.getTransactionDeadline() == null) {
+                ptmt.setDate(14, null);
+            } else {
+                ptmt.setDate(14, new java.sql.Date(newItem.getTransactionDeadline().getTime()));
+            }
+
             ptmt.setString(15, newItem.getPaymentSight());
             ptmt.setString(16, newItem.getAccountKind());
             ptmt.setString(17, newItem.getComment());
@@ -105,10 +111,12 @@ public class BusinessDaoImpl implements IBusinessDao {
             ptmt.setString(20, "admin");
             ptmt.setString(21, "admin");
             ptmt.execute();
+            insertCount = ptmt.getUpdateCount();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return insertCount;
     }
 
 
@@ -172,7 +180,11 @@ public class BusinessDaoImpl implements IBusinessDao {
             ptmt.setString(15, business.getPaymentSight());
             ptmt.setString(16, business.getAccountKind());
             ptmt.setString(17, business.getComment());
-            ptmt.setInt(18, business.getPrincipalId());
+            if(business.getPrincipalId() == null) {
+                ptmt.setNull(18, Types.INTEGER);
+            } else {
+                ptmt.setInt(18, business.getPrincipalId());
+            }
             ptmt.setInt(19, business.getStatus());
             ptmt.setString(20, "admin");
             ptmt.setInt(21, business.getId());
