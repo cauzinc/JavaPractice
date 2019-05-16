@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Component("iBusinessDao")
 public class BusinessDaoImpl implements IBusinessDao {
 
     /**
