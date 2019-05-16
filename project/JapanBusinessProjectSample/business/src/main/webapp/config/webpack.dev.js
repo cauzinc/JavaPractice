@@ -15,7 +15,13 @@ let devConfig = merge(baseWebpack, {
         host: "localhost",
         port: 8080,
         open: false,    // not open browser automatically
-        proxy: {}
+        // use proxy to provide Access-Control-Allow-Origin strategy
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8888',
+                pathRewrite: {'^/api' : ''}
+            }
+        }
     },
     plugins: [
         new CopyWebpackPlugin([

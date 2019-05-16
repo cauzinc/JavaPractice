@@ -12,11 +12,18 @@
 <script>
     import PortalInfoList from './../components/portal/PortalInfoList'
     import PortalColumn from './../components/portal/PortalColumn'
+    import { createNamespacedHelpers } from 'vuex'
+    const { mapActions: userMapActions } = createNamespacedHelpers('business')
     export default {
         name: "BusinessHome",
         components: {
             PortalInfoList,
             PortalColumn
+        },
+        created() {
+            console.log("test!!!!!");
+            this.getBusinessList().then(res => {});
+            // this.$axios('http://127.0.0.1:8888/business/getBusinessList');
         },
         data() {
             return {
@@ -32,6 +39,9 @@
                 ]
 
             }
+        },
+        methods: {
+            ...userMapActions(['getBusinessList'])
         }
     }
 </script>

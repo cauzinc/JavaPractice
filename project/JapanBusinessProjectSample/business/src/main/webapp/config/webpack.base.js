@@ -2,6 +2,7 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -74,6 +75,9 @@ module.exports = {
             filename: 'index.html',
             template: 'index.html',
             inject: true
+        }),
+        new webpack.ProvidePlugin({
+            Controller: [path.join(__dirname, '../src/store/Service'), 'default']
         })
     ]
 
