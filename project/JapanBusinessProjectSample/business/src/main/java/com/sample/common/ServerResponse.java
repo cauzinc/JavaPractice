@@ -1,12 +1,10 @@
 package com.sample.common;
 
-//import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.io.Serializable;
+
 // 当有数据为null的时候，序列化时忽略这个数据, 要注意引用的包不要弄错
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServerResponse<T> implements Serializable {

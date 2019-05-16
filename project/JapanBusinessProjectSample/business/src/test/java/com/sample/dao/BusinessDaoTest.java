@@ -1,7 +1,7 @@
 package com.sample.dao;
 
 
-import com.sample.dao.daoImplement.BusinessImpl;
+import com.sample.dao.daoImplement.BusinessDaoImpl;
 import com.sample.pojo.Business;
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class BusinessDaoTest {
-    private static IBusinessDao businessDao = new BusinessImpl();
+    private static IBusinessDao businessDao = new BusinessDaoImpl();
 
     @Test
     public void testGetBusinessList() {

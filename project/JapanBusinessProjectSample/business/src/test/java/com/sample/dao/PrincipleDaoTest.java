@@ -1,18 +1,14 @@
 package com.sample.dao;
 
-import com.sample.dao.daoImplement.BusinessImpl;
-import com.sample.dao.daoImplement.PrincipleImple;
-import com.sample.pojo.Business;
+import com.sample.dao.daoImplement.PrincipleDaoImpl;
 import com.sample.pojo.Principle;
 import com.sample.vo.PrincipleListItem;
 import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 public class PrincipleDaoTest {
-    private static IPrincipleDao principleDao = new PrincipleImple();
+    private static IPrincipleDao principleDao = new PrincipleDaoImpl();
 
     @Test
     public void testGetPrincipleList() {
