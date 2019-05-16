@@ -21,7 +21,8 @@ let devConfig = merge(baseWebpack, {
                 target: 'http://localhost:8888',
                 pathRewrite: {'^/api' : ''}
             }
-        }
+        },
+        disableHostCheck: true
     },
     plugins: [
         new CopyWebpackPlugin([
