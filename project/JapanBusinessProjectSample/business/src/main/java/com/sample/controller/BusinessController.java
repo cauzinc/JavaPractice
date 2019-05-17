@@ -73,10 +73,17 @@ public class BusinessController {
         if(business == null) {
             return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Parameter error");
         }
-        if(iBusinessDao.insertBusiness(business) > 0) {
-            return ServerResponse.createBySuccessMessage("ok");
+        return businessService.insertBusiness(business);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateBusiness", method = RequestMethod.POST)
+    public ServerResponse updateBusiness(@RequestBody Business business) {
+        if(business == null) {
+            return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Parameter error");
         }
-        return ServerResponse.createBySuccessMessage("保存失敗しました｡資料の入力をチェックしてください。");
+        businessMapper.updateByPrimaryKeySelective(business);
+        return ServerResponse.createBySuccessMessage("ok");
     }
 
 }
