@@ -21,15 +21,15 @@
                 <div class="form-box">
                     <div class="form">
                         <label for="name">*取引名</label> <br />
-                        <input id="name" type="text" /> <br />
+                        <input id="name" type="text" v-model="businessName" /> <br />
 
                         <label for="tel">電話</label> <br />
-                        <input id="tel" type="text" /> <br />
+                        <input id="tel" type="text" v-model="businessTel" /> <br />
 
                         <label for="website">Web サイト</label> <br />
-                        <input id="website" type="text" /> <br />
+                        <input id="website" type="text" v-model="website" /> <br />
 
-                        <button>保存</button>
+                        <button @click="insertBusiness()">保存</button>
                     </div>
                 </div>
             </div>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+    import { createNamespacedHelpers } from 'vuex'
+    const { mapActions: businessMapActions } = createNamespacedHelpers('business')
     export default {
         name: "BusinessSupportMenu",
         data() {
@@ -52,7 +54,33 @@
                 }, {
                     title: "請求関連",
                     items: ["請求書作成", "注文書作成"]
-                }]
+                }],
+                businessName: "",
+                businessTel: "",
+                website: ""
+            }
+        },
+        methods: {
+            ...businessMapActions(['quickInsertBusiness', 'getBusinessList']),
+            insertBusiness() {
+                if(!this.businessName) {
+                    return alert("取引名を入力してください");
+                }
+                this.quickInsertBusiness({
+                    businessName: this.businessName,
+                    businessTel: this.businessTel,
+                    website: this.website
+                }).then(res => {
+                    if(res.data.status === 1) {
+                        alert(res.data.msg);
+                    } else {
+                        this.getBusinessList();
+                        alert("保存しました");
+                        this.businessName = "";
+                        this.businessTel = "";
+                        this.website = "";
+                    }
+                });
             }
         }
     }

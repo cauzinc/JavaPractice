@@ -21,7 +21,7 @@ export default class Service {
     fetch(api, method, data) {
         let mtd = method.toLowerCase();
         let url = this.prefix + api;
-        return mtd === 'get' ? axios.get(url, { params: data }) : axios(url, data);
+        return mtd === 'get' ? axios.get(url, { params: data }) : axios.post(url, data);
     }
 
 }

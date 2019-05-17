@@ -21,8 +21,8 @@ let service = new Service({
                 }
             })
         },
-        addToCart({ commit }, data) {
-            return service.fetch('addToCart', 'post', data);
+        quickInsertBusiness({ commit }, data) {
+            return service.fetch('quickInsert', 'post', data);
         }
     },
     mutations: {
