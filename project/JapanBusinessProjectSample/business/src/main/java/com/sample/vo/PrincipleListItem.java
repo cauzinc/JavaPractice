@@ -5,6 +5,14 @@ public class PrincipleListItem {
     private String businessName;
     private String tel;
 
+    public PrincipleListItem(String principleName, String businessName, String tel) {
+        this.principleName = principleName;
+        this.businessName = businessName;
+        this.tel = tel;
+    }
+
+    public PrincipleListItem() { }
+
     public String getPrincipleName() {
         return principleName;
     }

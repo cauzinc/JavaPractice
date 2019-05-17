@@ -21,6 +21,15 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
+
+  <resultMap id="principleItemListResult" type="com.sample.vo.PrincipleListItem">
+    <constructor >
+      <arg column="principle_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="business_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tel" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     id, principle_name, department, position, mail, tel, phone, fax, address, postcode, 
     favorite, comment, create_user, update_user, create_time, update_time
@@ -46,8 +55,8 @@
       #{position,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{postcode,jdbcType=VARCHAR}, #{favorite,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
-      #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, now(),
+      now())
   </insert>
   <insert id="insertSelective" parameterType="com.sample.pojo.Principle" >
     insert into sample_principle
@@ -145,10 +154,10 @@
         #{updateUser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>
@@ -194,11 +203,8 @@
       <if test="updateUser != null" >
         update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = now(),
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -218,8 +224,13 @@
       comment = #{comment,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       update_user = #{updateUser,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getPrincipleWithBusinessInfo" resultMap="principleItemListResult">
+    select principle_name, business_name, tel
+    from sample_principle, sample_business
+    where sample_business.principal_id = sample_principle.id
+  </select>
 </mapper>
