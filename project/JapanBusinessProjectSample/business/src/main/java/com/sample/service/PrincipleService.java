@@ -51,7 +51,8 @@ public class PrincipleService {
         if(principle == null) {
             return ServerResponse.createByErrorMessage("データは検索できません");
         }
-        return ServerResponse.createBySuccessMessage("ok");
+        principle.setId(null);
+        return ServerResponse.createBySuccess(principle);
     }
 
 }

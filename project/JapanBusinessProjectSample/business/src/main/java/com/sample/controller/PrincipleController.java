@@ -49,7 +49,7 @@ public class PrincipleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "deletePrincipleById", method = RequestMethod.POST)
+    @RequestMapping(value = "deletePrincipleById", method = RequestMethod.GET)
     public ServerResponse updatePrinciple(Integer principleId) {
         if(principleId == null) {
             return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Argument Error");
