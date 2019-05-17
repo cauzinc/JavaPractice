@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import BusinessHome from './../pages/BusinessHome'
+import BusinessHome from '../pages/business/BusinessHome'
 
 Vue.use(Router);
 

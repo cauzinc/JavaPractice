@@ -10,8 +10,8 @@
 
 
 <script>
-    import PortalInfoList from './../components/portal/PortalInfoList'
-    import PortalColumn from './../components/portal/PortalColumn'
+    import PortalInfoList from '../../components/portal/PortalInfoList'
+    import PortalColumn from '../../components/portal/PortalColumn'
     import { createNamespacedHelpers } from 'vuex'
     const { mapActions: userMapActions, mapState: businessMapState } = createNamespacedHelpers('business')
     export default {
@@ -36,33 +36,11 @@
                     { name: "取引先のインポート", link: "#" },
                     { name: "取引先エクスポート", link: "#" },
                     { name: "取引先所有権の移行", link: "#" }
-                ],
-                // businessList: [
-                //     { value1: "", value2: "", value3: "" },
-                //     { value1: "", value2: "", value3: "" },
-                //     { value1: "", value2: "", value3: "" },
-                //     { value1: "", value2: "", value3: "" },
-                //     { value1: "", value2: "", value3: "" },
-                //     { value1: "", value2: "", value3: "" }
-                // ]
+                ]
             }
         },
         created() {
-            console.log('created');
-            console.log(this);
-            console.log(this.businessList);
             this.getBusinessList();
-            // this.getBusinessList().then(res => {
-            //     console.log(res);
-            //     if(res.data.status === 0) {
-            //         res.data.data.map((item, index) => {
-            //             this.businessList[index].value1 = item.businessName;
-            //             this.businessList[index].value2 = item.address;
-            //             this.businessList[index].value3 = item.businessTel;
-            //         })
-            //     }
-            //
-            // });
         },
         methods: {
             ...userMapActions(['getBusinessList'])
