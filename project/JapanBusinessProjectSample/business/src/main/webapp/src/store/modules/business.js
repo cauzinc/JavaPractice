@@ -23,6 +23,9 @@ let service = new Service({
         },
         quickInsertBusiness({ commit }, data) {
             return service.fetch('quickInsert', 'post', data);
+        },
+        getBusinessById({ commit }, data) {
+            return service.fetch('getBusinessById', 'get', data);
         }
     },
     mutations: {

@@ -10,7 +10,7 @@ body {
     width: 100%;
 }
 
-p, ul, div {
+h1, h2, h3, h4, h5, p, ul, div {
     margin: 0;
     box-sizing: content-box;
     /* 消除某些浏览器的默认样式 */
