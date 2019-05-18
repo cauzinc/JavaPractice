@@ -53,7 +53,10 @@ public class BusinessController {
 
     @ResponseBody
     @RequestMapping(value = "delete", method = RequestMethod.GET)
-    public ServerResponse delete(int businessId) {
+    public ServerResponse delete(Integer businessId) {
+        if(businessId == null) {
+            return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Need business id");
+        }
         iBusinessDao.deleteBusinessById(businessId);
         return ServerResponse.createBySuccessMessage("ok");
     }

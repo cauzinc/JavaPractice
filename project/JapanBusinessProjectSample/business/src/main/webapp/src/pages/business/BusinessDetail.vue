@@ -4,8 +4,8 @@
             <h3 class="text">取引先情報</h3>
         </div>
         <div class="btn-box">
-            <button class="btn">編集</button>
-            <button class="btn">削除</button>
+            <button class="btn" @click="edit()">編集</button>
+            <button class="btn" @click="deleteInfo()">削除</button>
             <button class="btn">コピー</button>
         </div>
         <div class="detail-box">
@@ -142,7 +142,23 @@
             }
         },
         methods: {
-            ...businessMapActions(['getBusinessById'])
+            ...businessMapActions(['getBusinessById', 'deleteBusinessById']),
+            edit() {
+
+            },
+            deleteInfo() {
+                if(confirm("このデータを削除しますか")) {
+                    this.deleteBusinessById({
+                        businessId: this.$route.query.businessId
+                    }).then(res => {
+                        if(res.data && res.data.status === 0) {
+                            this.$router.push({ name: "businessHome" })
+                        } else {
+                            alert(res.data.msg);
+                        }
+                    });
+                }
+            }
         },
         created() {
             this.getBusinessById({

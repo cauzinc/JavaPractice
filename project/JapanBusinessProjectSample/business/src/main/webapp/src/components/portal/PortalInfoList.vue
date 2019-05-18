@@ -46,7 +46,9 @@
         },
         methods: {
             go2Detail(id) {
-                this.$router.push({ name: "businessDetail", query: { businessId: id } });
+                if(id || id === 0) {
+                    this.$router.push({ name: "businessDetail", query: { businessId: id } });
+                }
             }
         }
     }
