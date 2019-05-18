@@ -38,12 +38,21 @@ public class BusinessService {
     }
 
     public ServerResponse insertBusiness(Business business) {
-        business.setCreateUser("admin");
-        business.setUpdateUser("admin");
         business.setStatus(0);
+        business.setId(null);
         if(businessMapper.insert(business) > 0) {
             return ServerResponse.createBySuccessMessage("ok");
         }
         return ServerResponse.createBySuccessMessage("保存失敗しました｡資料の入力をチェックしてください。");
     }
+
+    public ServerResponse updateBusiness(Business business) {
+
+        if(businessMapper.updateByPrimaryKeySelective(business) > 0) {
+            return ServerResponse.createBySuccessMessage("ok");
+        }
+        return ServerResponse.createBySuccessMessage("保存失敗しました｡資料の入力をチェックしてください。");
+    }
+
+
 }

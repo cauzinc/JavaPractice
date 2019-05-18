@@ -52,7 +52,7 @@ let service = new Service({
                 state.businessList[index].value1 = item.businessName;
                 state.businessList[index].value2 = item.address;
                 state.businessList[index].value3 = item.businessTel;
-               state.businessList[index].id = item.id;
+                state.businessList[index].id = item.id;
             })
         }
     }

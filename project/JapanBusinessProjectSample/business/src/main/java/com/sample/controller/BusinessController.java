@@ -76,6 +76,9 @@ public class BusinessController {
         if(business == null) {
             return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Parameter error");
         }
+        // todo should be saved as current user
+        business.setCreateUser("admin");
+        business.setUpdateUser("admin");
         return businessService.insertBusiness(business);
     }
 
@@ -85,8 +88,7 @@ public class BusinessController {
         if(business == null) {
             return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Parameter error");
         }
-        businessMapper.updateByPrimaryKeySelective(business);
-        return ServerResponse.createBySuccessMessage("ok");
+        return businessService.updateBusiness(business);
     }
 
 }
