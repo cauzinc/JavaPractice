@@ -156,6 +156,9 @@
                 this.$router.push({ name: "BusinessHome" });
             },
             save() {
+                if(!this.businessName.trim()) {
+                    return alert("取引先名は必要です");
+                }
                 this.insertBusiness({
                     businessName: this.businessName,
                     businessFax: this.businessFax,

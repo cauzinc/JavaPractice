@@ -4,7 +4,7 @@
             <strong>最近の取引情報</strong>
         </div>
         <div :class="$style.btnBox">
-            <button :class="$style.btn">新規</button>
+            <button :class="$style.btn" @click="go2Create()">新規</button>
         </div>
         <div :class="$style.listBox">
             <ul>
@@ -49,6 +49,9 @@
                 if(id || id === 0) {
                     this.$router.push({ name: "businessDetail", query: { businessId: id } });
                 }
+            },
+            go2Create() {
+                this.$emit('go2Create');
             }
         }
     }

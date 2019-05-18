@@ -1,6 +1,6 @@
 <template>
     <div class="business-home-container">
-        <portal-info-list :infoList="businessList" style="margin-bottom: 30px;"></portal-info-list>
+        <portal-info-list @go2Create="createNewBusiness()" :infoList="businessList" style="margin-bottom: 30px;"></portal-info-list>
         <div class="other-info">
             <portal-column class="column" :infoList="reportList" title="レポート"></portal-column>
             <portal-column class="column" :infoList="toolList" title="ツール"></portal-column>
@@ -43,7 +43,10 @@
             this.getBusinessList();
         },
         methods: {
-            ...userMapActions(['getBusinessList'])
+            ...userMapActions(['getBusinessList']),
+            createNewBusiness() {
+                this.$router.push({ name: "businessCreate" })
+            }
         }
     }
 </script>
