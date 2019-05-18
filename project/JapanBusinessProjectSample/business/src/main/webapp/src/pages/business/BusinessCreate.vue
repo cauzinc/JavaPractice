@@ -212,10 +212,10 @@
             }
         }
         .detail-box {
+            padding-bottom: 30px;
             .wrapper {
                 width: 90%;
                 margin: 0 auto;
-                padding-bottom: 30px;
                 .info-title {
                     @include title-box;
                     border: $thin-border;
