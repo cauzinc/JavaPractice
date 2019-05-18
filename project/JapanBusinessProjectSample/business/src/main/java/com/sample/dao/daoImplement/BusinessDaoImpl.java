@@ -20,13 +20,14 @@ public class BusinessDaoImpl implements IBusinessDao {
      */
     public List<Business> getBusinessList() {
         Connection conn = DBUtil.getConn();
-        String sql = "SELECT business_name, address, business_tel FROM sample_business order by update_time";
+        String sql = "SELECT id, business_name, address, business_tel FROM sample_business order by update_time";
         List<Business> result = new ArrayList<Business>();
         try {
             PreparedStatement ptmt = conn.prepareStatement(sql);
             ResultSet rs = ptmt.executeQuery();
             while(rs.next()) {
                 Business item = new Business();
+                item.setId(rs.getInt("id"));
                 item.setBusinessName(rs.getString("business_name"));
                 item.setBusinessTel(rs.getString("business_tel"));
                 item.setAddress(rs.getString("address"));

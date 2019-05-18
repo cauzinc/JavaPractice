@@ -13,7 +13,7 @@
                     <span :class="$style.tableItem">住所</span>
                     <span :class="$style.tableItem">電話</span>
                 </li>
-                <li :class="$style.items" v-for="(item, index) in infoList">
+                <li :class="$style.items" v-for="(item, index) in infoList" @click="go2Detail(item.id)">
                     <span :class="$style.tableItem">{{item.value1}}</span>
                     <span :class="$style.tableItem">{{item.value2}}</span>
                     <span :class="$style.tableItem">{{item.value3}}</span>
@@ -42,6 +42,11 @@
         data() {
             return {
 
+            }
+        },
+        methods: {
+            go2Detail(id) {
+                this.$router.push({ name: "businessDetail", query: { businessId: id } });
             }
         }
     }
@@ -88,6 +93,9 @@
                 border-bottom: $thin-border;
                 &:last-child {
                     border-bottom: none;
+                }
+                &:hover {
+                    cursor: pointer;
                 }
             }
             .header, .items  {
