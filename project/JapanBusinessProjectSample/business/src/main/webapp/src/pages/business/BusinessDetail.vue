@@ -3,11 +3,17 @@
         <div class="title">
             <h3 class="text">取引先情報</h3>
         </div>
-        <div class="btn-box">
+        <div class="btn-box" v-if="!editMode">
             <button class="btn" @click="edit()">編集</button>
             <button class="btn" @click="deleteInfo()">削除</button>
             <button class="btn">コピー</button>
         </div>
+        <div class="btn-box" v-else>
+            <button class="btn" @click="update()">保存</button>
+            <button class="btn" @click="update()">保存して新しく作成</button>
+            <button class="btn" @click="cancel()">キャンセル</button>
+        </div>
+
         <div class="detail-box">
             <div class="wrapper basic-info">
                 <div class="info-title">取引先情報</div>
@@ -21,21 +27,26 @@
                     <div class="line">
                         <div class="item-wrapper">
                             <span class="label" style="color: red">* 取引名</span>
-                            <span class="item">{{businessName}}</span>
+                            <span v-if="!editMode" class="item">{{businessName}}</span>
+                            <input v-else v-model="businessName" type="text" />
+
                         </div>
                         <div class="item-wrapper">
                             <span class="label">FAX</span>
-                            <span class="item">{{businessFax}}</span>
+                            <span v-if="!editMode" class="item">{{businessFax}}</span>
+                            <input v-else v-model="businessFax" type="text" />
                         </div>
                     </div>
                     <div class="line">
                         <div class="item-wrapper">
                             <span class="label">電話番号</span>
-                            <span class="item">{{businessTel}}</span>
+                            <span v-if="!editMode" class="item">{{businessTel}}</span>
+                            <input v-else v-model="businessTel" type="text" />
                         </div>
                         <div class="item-wrapper">
                             <span class="label">Webサイト</span>
-                            <span class="item">{{website}}</span>
+                            <span v-if="!editMode" class="item">{{website}}</span>
+                            <input v-else v-model="website" type="text" />
                         </div>
                     </div>
                 </div>
@@ -46,51 +57,61 @@
                     <div class="line">
                         <div class="item-wrapper">
                             <span class="label">住所</span>
-                            <span class="item">{{address}}</span>
+                            <span v-if="!editMode" class="item">{{address}}</span>
+                            <input v-else v-model="address" type="text" />
                         </div>
                         <div class="item-wrapper">
                             <span class="label">郵便コード</span>
-                            <span class="item">{{postcode}}</span>
+                            <span v-if="!editMode" class="item">{{postcode}}</span>
+                            <input v-else v-model="postcode" type="text" />
                         </div>
                     </div>
                     <div class="line">
                         <div class="item-wrapper">
                             <span class="label">得意分野</span>
-                            <span class="item">{{advantageField}}</span>
+                            <span v-if="!editMode" class="item">{{advantageField}}</span>
+                            <input v-else v-model="advantageField" type="text" />
                         </div>
                         <div class="item-wrapper">
                             <span class="label">従業員数</span>
-                            <span class="item">{{stuffNum}}</span>
+                            <span v-if="!editMode" class="item">{{stuffNum}}</span>
+                            <input v-else v-model="stuffNum" type="text" />
                         </div>
                     </div>
                     <div class="line">
                         <div class="item-wrapper">
                             <span class="label">取引先の種別</span>
-                            <span class="item">{{accountKind}}</span>
+                            <span v-if="!editMode" class="item">{{accountKind}}</span>
+                            <input v-else v-model="accountKind" type="text" />
                         </div>
                         <div class="item-wrapper">
                             <span class="label">年間売上</span>
-                            <span class="item">{{annualSales}}</span>
+                            <span v-if="!editMode" class="item">{{annualSales}}</span>
+                            <input v-else v-model="annualSales" type="text" />
                         </div>
                     </div>
                     <div class="line">
                         <div class="item-wrapper">
                             <span class="label">銀行名</span>
-                            <span class="item">{{bankName}}</span>
+                            <span v-if="!editMode" class="item">{{bankName}}</span>
+                            <input v-else v-model="bankName" type="text" />
                         </div>
                         <div class="item-wrapper">
                             <span class="label">支店名</span>
-                            <span class="item">{{bankBranchName}}</span>
+                            <span v-if="!editMode" class="item">{{bankBranchName}}</span>
+                            <input v-else v-model="bankBranchName" type="text" />
                         </div>
                     </div>
                     <div class="line">
                         <div class="item-wrapper">
                             <span class="label">口座番号</span>
-                            <span class="item">{{bankNumber}}</span>
+                            <span v-if="!editMode" class="item">{{bankNumber}}</span>
+                            <input v-else v-model="bankNumber" type="text" />
                         </div>
                         <div class="item-wrapper">
                             <span class="label">支払サイト</span>
-                            <span class="item">{{paymentSight}}</span>
+                            <span v-if="!editMode" class="item">{{paymentSight}}</span>
+                            <input v-else v-model="paymentSight" type="text" />
                         </div>
                     </div>
                 </div>
@@ -112,6 +133,12 @@
                 </div>
             </div>
 
+            <div class="btn-box" v-if="editMode">
+                <button class="btn" @click="update()">保存</button>
+                <button class="btn" @click="update()">保存して新しく作成</button>
+                <button class="btn" @click="cancel()">キャンセル</button>
+            </div>
+
         </div>
     </div>
 </template>
@@ -123,6 +150,7 @@
         name: "BusinessDetail",
         data() {
             return {
+                id: "",
                 businessName: "",
                 businessFax: "",
                 businessTel: "",
@@ -138,12 +166,19 @@
                 bankNumber: "",
                 paymentSight: "",
                 createUser: "",
-                updateUser: ""
+                updateUser: "",
+                editMode: false
             }
         },
         methods: {
-            ...businessMapActions(['getBusinessById', 'deleteBusinessById']),
+            ...businessMapActions(['getBusinessById', 'deleteBusinessById', 'updateBusiness']),
             edit() {
+                this.editMode = true;
+            },
+            cancel() {
+                this.editMode = false;
+            },
+            update() {
 
             },
             deleteInfo() {
@@ -158,6 +193,35 @@
                         }
                     });
                 }
+            },
+            update() {
+                if(!this.$route.query.businessId) {
+                    return alert("data error!");
+                }
+                this.updateBusiness({
+                    id: this.$route.query.businessId,
+                    businessName: this.businessName,
+                    businessFax: this.businessFax,
+                    businessTel: this.businessTel,
+                    website: this.website,
+                    address: this.address,
+                    postcode: this.postcode,
+                    advantageField: this.advantageField,
+                    stuffNum: this.stuffNum,
+                    accountKind: this.accountKind,
+                    annualSales: this.annualSales,
+                    bankName: this.bankName,
+                    bankBranchName: this.bankBranchName,
+                    bankNumber: this.bankNumber,
+                    paymentSight: this.paymentSight,
+                    updateUser: "admin"
+                }).then(res => {
+                    if(res.data && res.data.status === 0) {
+                        this.editMode = false;
+                    } else {
+                        alert(res.data.msg);
+                    }
+                });
             }
         },
         created() {
