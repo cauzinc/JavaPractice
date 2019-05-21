@@ -1,6 +1,6 @@
 <template>
-    <div class="business-home-container">
-        <portal-info-list @go2Create="createNewBusiness()" :infoList="businessList" style="margin-bottom: 30px;"></portal-info-list>
+    <div class="principle-home-container">
+        <portal-info-list @go2Create="createNewBusiness()" :infoList="principleList" style="margin-bottom: 30px;"></portal-info-list>
         <div class="other-info">
             <portal-column class="column" :infoList="reportList" title="レポート"></portal-column>
             <portal-column class="column" :infoList="toolList" title="ツール"></portal-column>
@@ -8,27 +8,25 @@
     </div>
 </template>
 
-
 <script>
     import PortalInfoList from '../../components/portal/PortalInfoList'
     import PortalColumn from '../../components/portal/PortalColumn'
     import { createNamespacedHelpers } from 'vuex'
-    const { mapActions: businessMapActions, mapState: businessMapState } = createNamespacedHelpers('business')
+    const { mapActions: principleMapActions, mapState: principleMapState } = createNamespacedHelpers('principle')
     export default {
-        name: "BusinessHome",
+        name: "",
         components: {
             PortalInfoList,
             PortalColumn
         },
         computed: {
-            ...businessMapState(['businessList'])
+            ...principleMapState(['principleList'])
         },
         data() {
             return {
                 reportList: [
-                    { name: "取引先 ･ 得意先一覧", link: "#" },
-                    { name: "取引先 ･ パートナー一覧", link: "#" },
-                    { name: "取引先所有者一覧", link: "#" }
+                    { name: "取引先 ･ 取引担当者一覧", link: "#" },
+                    { name: "パートナー一覧", link: "#" }
                 ],
                 toolList: [
                     { name: "取引先のインポート", link: "#" },
@@ -38,26 +36,18 @@
             }
         },
         created() {
-            this.getBusinessList();
+            this.getPrincipleList();
         },
         methods: {
-            ...businessMapActions(['getBusinessList']),
-            createNewBusiness() {
-                this.$router.push({ name: "businessCreate" })
-            }
+            ...principleMapActions(['getPrincipleList'])
         }
     }
 </script>
 
-<style lang="scss" scoped>
-    .business-home-container {
-        padding: 30px 10px;
-        .other-info {
-            @include flex-row-center;
-            
-            .column {
-                width: 45%;
-            }
-        }
-    }
+<style scoped>
+.principle-home-container {
+
+
+
+}
 </style>
