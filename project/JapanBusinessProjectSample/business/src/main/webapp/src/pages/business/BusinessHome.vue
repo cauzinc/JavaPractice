@@ -1,6 +1,6 @@
 <template>
     <div class="business-home-container">
-        <portal-info-list @go2Create="createNewBusiness()" :infoList="businessList" style="margin-bottom: 30px;"></portal-info-list>
+        <portal-info-list @go2Detail="go2Detail" @go2Create="createNewBusiness()" :titleList="titleList" :infoList="businessList" style="margin-bottom: 30px;"></portal-info-list>
         <div class="other-info">
             <portal-column class="column" :infoList="reportList" title="レポート"></portal-column>
             <portal-column class="column" :infoList="toolList" title="ツール"></portal-column>
@@ -34,7 +34,8 @@
                     { name: "取引先のインポート", link: "#" },
                     { name: "取引先エクスポート", link: "#" },
                     { name: "取引先所有権の移行", link: "#" }
-                ]
+                ],
+                titleList: [ '取引先名', '住所', '電話' ]
             }
         },
         created() {
@@ -44,6 +45,9 @@
             ...businessMapActions(['getBusinessList']),
             createNewBusiness() {
                 this.$router.push({ name: "businessCreate" })
+            },
+            go2Detail(id) {
+                this.$router.push({ name: "businessDetail", query: { businessId: id } });
             }
         }
     }

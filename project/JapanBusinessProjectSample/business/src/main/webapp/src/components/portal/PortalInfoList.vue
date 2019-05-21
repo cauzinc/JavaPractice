@@ -9,9 +9,7 @@
         <div :class="$style.listBox">
             <ul>
                 <li :class="$style.header">
-                    <span :class="$style.tableItem">取引先名</span>
-                    <span :class="$style.tableItem">住所</span>
-                    <span :class="$style.tableItem">電話</span>
+                    <span :class="$style.tableItem" v-for="title in titleList">{{title}}</span>
                 </li>
                 <li :class="$style.items" v-for="(item, index) in infoList" @click="go2Detail(item.id)">
                     <span :class="$style.tableItem">{{item.value1}}</span>
@@ -37,6 +35,10 @@
                     { value1: "", value2: "", value3: "" },
                     { value1: "", value2: "", value3: "" }
                 ]
+            },
+            titleList: {
+                type: Array,
+                default: [ '取引先名', '住所', '電話' ]
             }
         },
         data() {
@@ -46,8 +48,10 @@
         },
         methods: {
             go2Detail(id) {
+
                 if(id || id === 0) {
-                    this.$router.push({ name: "businessDetail", query: { businessId: id } });
+                    this.$emit('go2Detail', id);
+                    // this.$router.push({ name: "businessDetail", query: { businessId: id } });
                 }
             },
             go2Create() {

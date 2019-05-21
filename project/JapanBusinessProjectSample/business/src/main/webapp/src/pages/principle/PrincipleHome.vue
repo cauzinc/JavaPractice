@@ -1,6 +1,6 @@
 <template>
     <div class="principle-home-container">
-        <portal-info-list @go2Create="createNewBusiness()" :infoList="principleList" style="margin-bottom: 30px;"></portal-info-list>
+        <portal-info-list @go2Detail="go2Detail" @go2Create="createNewPrinciple()" :titleList="['担当者名', '取引先名', '電話']" :infoList="principleList" style="margin-bottom: 30px;"></portal-info-list>
         <div class="other-info">
             <portal-column class="column" :infoList="reportList" title="レポート"></portal-column>
             <portal-column class="column" :infoList="toolList" title="ツール"></portal-column>
@@ -39,15 +39,26 @@
             this.getPrincipleList();
         },
         methods: {
-            ...principleMapActions(['getPrincipleList'])
+            ...principleMapActions(['getPrincipleList']),
+            createNewPrinciple() {
+                this.$router.push({ name: 'principleDetail' })
+            },
+            go2Detail(id) {
+                this.$router.push({ name: 'principle', query: { principleI: id } })
+            }
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .principle-home-container {
+    padding: 30px 10px;
+    .other-info {
+        @include flex-row-center;
 
-
-
+        .column {
+            width: 45%;
+        }
+    }
 }
 </style>
