@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <div class="quick-insert">
+            <div class="quick-insert" v-if="insertBusinessPage.indexOf($route.name) >= 0">
                 <p class="item-content">簡易作成</p>
                 <div class="form-box">
                     <div class="form">
@@ -55,6 +55,8 @@
                     title: "請求関連",
                     items: ["請求書作成", "注文書作成"]
                 }],
+                // pages where quick insert display
+                insertBusinessPage: ['businessHome'],
                 businessName: "",
                 businessTel: "",
                 website: ""

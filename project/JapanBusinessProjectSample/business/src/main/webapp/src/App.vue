@@ -38,8 +38,8 @@
         data() {
             return {
                 menu: [
-                    { name: "ホーム", link: "" },
-                    { name: "取引先", link: "" },
+                    { name: "ホーム", link: "home" },
+                    { name: "取引先", link: "businessHome" },
                     { name: "取引先担当者", link: "" },
                     { name: "スタッフ", link: "" },
                     { name: "相談", link: "" },
@@ -49,12 +49,17 @@
                     { name: "レポート", link: "" },
                     { name: "+", link: "" }
                 ],
-                selectedTag: 1
+                selectedTag: 0
             }
         },
         methods: {
             select(index) {
-                this.selectedTag = index;
+                if(this.menu[index] && this.menu[index].link) {
+                    this.selectedTag = index;
+                    this.$router.push({ name: this.menu[index].link })
+                } else {
+                    alert("この部分は開発中");
+                }
             }
         }
     }
