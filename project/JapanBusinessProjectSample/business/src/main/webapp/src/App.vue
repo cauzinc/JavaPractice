@@ -12,7 +12,9 @@
                         <span>営業プラス</span>
                     </div>
                     <div class="tag-box">
-                        <div @click="select(index)" class="tag" :class="{ active: index === selectedTag }" v-for="(tag, index) in menu">{{tag.name}}</div>
+                        <div @click="select(index)" class="tag" :class="{ active: index === currentPageIndex }" v-for="(tag, index) in menu">
+                            {{tag.name}}
+                        </div>
                     </div>
                     <div class="page-content">
                         <router-view />
@@ -35,12 +37,19 @@
             BusinessSupportMenu,
             CommonBusiness
         },
+        computed: {
+            currentPageIndex() {
+                return this.menu.findIndex(item => {
+                    return item.link === this.$route.name;
+                })
+            }
+        },
         data() {
             return {
                 menu: [
                     { name: "ホーム", link: "home" },
                     { name: "取引先", link: "businessHome" },
-                    { name: "取引先担当者", link: "" },
+                    { name: "取引先担当者", link: "principleHome" },
                     { name: "スタッフ", link: "" },
                     { name: "相談", link: "" },
                     { name: "案件", link: "" },
@@ -48,14 +57,12 @@
                     { name: "リード", link: "" },
                     { name: "レポート", link: "" },
                     { name: "+", link: "" }
-                ],
-                selectedTag: 0
+                ]
             }
         },
         methods: {
             select(index) {
                 if(this.menu[index] && this.menu[index].link) {
-                    this.selectedTag = index;
                     this.$router.push({ name: this.menu[index].link })
                 } else {
                     alert("この部分は開発中");
