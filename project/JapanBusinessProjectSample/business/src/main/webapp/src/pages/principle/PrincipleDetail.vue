@@ -149,10 +149,11 @@
                 }
             },
             update() {
-                if(!this.$route.query.businessId) {
+                if(!this.$route.query.principleId) {
                     return alert("data error!");
                 }
                 this.updatePrinciple({
+                    id: this.$route.query.principleId,
                     principleName: this.principleName,
                     department: this.department,
                     businessName: this.businessName,

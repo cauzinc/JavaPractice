@@ -321,11 +321,23 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!--  当我们不返回对象的所有数据的时候 -->
+  <!--  当我们不返回对象的所有数据的时候, 要设计对应的映射 -->
   <select id="getBusinessNameByPrincipleId" parameterType="map" resultMap="businessNameList">
     select business_name
     from sample_business
     where principal_id = #{principleId}
   </select>
+
+  <update id="clearPrincipleId" parameterType="java.lang.Integer">
+    update sample_business
+    set principal_id = null
+    where principal_id = #{principleId}
+  </update>
+
+  <update id="setPrincipleIdByName" parameterType="map">
+    update sample_business
+    set principal_id = #{principleId}
+    where business_name = #{businessName}
+  </update>
 
 </mapper>

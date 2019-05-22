@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PrincipleService {
@@ -39,7 +40,23 @@ public class PrincipleService {
         return ServerResponse.createBySuccessMessage("ok");
     }
 
-    public ServerResponse updatePrinciple(Principle principle) {
+    public ServerResponse updatePrinciple(Principle principle, String businessName) {
+        // judge if business charged has changed
+        boolean ifChargeBusinessChanged = true;
+        int businessId = 0;
+        Principle principleCopy = principleMapper.selectByPrimaryKey(principle.getId());
+        List<Business> businessList = businessMapper.getBusinessNameByPrincipleId(principle.getId());
+        for(Business business : businessList) {
+            if(business.getBusinessName().equals(businessName.trim())) {
+                ifChargeBusinessChanged = false;
+            }
+        }
+        // todo 这里的三条sql应该整合成一项事务
+        if(ifChargeBusinessChanged) {
+            businessMapper.clearPrincipleId(principle.getId());
+            businessMapper.setPrincipleIdByName(businessName, principle.getId());
+        }
+
         int rowCount = principleMapper.updateByPrimaryKeySelective(principle);
         if(rowCount > 0) {
             return ServerResponse.createBySuccessMessage("ok");
@@ -70,6 +87,7 @@ public class PrincipleService {
         }
 
         PrincipleDetail principleDetail = new PrincipleDetail();
+        principleDetail.setMail(principle.getMail());
         principleDetail.setPrincipleName(principle.getPrincipleName());
         principleDetail.setAddress(principle.getAddress());
         principleDetail.setPosition(principle.getPosition());
@@ -82,6 +100,28 @@ public class PrincipleService {
         principleDetail.setPostcode(principle.getPostcode());
 
         return ServerResponse.createBySuccess(principleDetail);
+    }
+
+    public Principle assemblePrinciple(Map<String, Object> params) {
+        Principle principle = new Principle();
+        if(params.get("id") != null) {
+            principle.setId(Integer.valueOf((String) params.get("id")));
+        }
+        principle.setPrincipleName((String)params.get("principleName"));
+        principle.setDepartment((String)params.get("department"));
+        principle.setPosition((String)params.get("position"));
+        principle.setMail((String)params.get("mail"));
+        principle.setTel((String)params.get("tel"));
+        principle.setPhone((String)params.get("phone"));
+        principle.setFax((String)params.get("fax"));
+        principle.setPostcode((String)params.get("postcode"));
+        principle.setAddress((String)params.get("address"));
+        principle.setFavorite((String)params.get("favorite"));
+        principle.setComment((String)params.get("comment"));
+        principle.setCreateUser("admin");
+        principle.setUpdateUser("admin");
+
+        return principle;
     }
 
 }

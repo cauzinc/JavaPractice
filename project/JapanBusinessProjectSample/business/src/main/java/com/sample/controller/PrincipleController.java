@@ -34,48 +34,22 @@ public class PrincipleController {
     // httpServletRequest   只能接受表单数据，我们使用json时不使用该对象
     @ResponseBody
     @RequestMapping(value = "insertPrinciple", method = RequestMethod.POST)
-    public ServerResponse insertPrinciple(@RequestBody Map<String, String> params) {
-        String principleName = params.get("principleName");
-        String department = params.get("department");
-        String businessName = params.get("businessName");
-        String position = params.get("position");
-        String mail = params.get("mail");
-        String tel = params.get("tel");
-        String phone = params.get("phone");
-        String fax = params.get("fax");
-        String postcode = params.get("postcode");
-        String address = params.get("address");
-        String favorite = params.get("favorite");
-        String comment = params.get("comment");
+    public ServerResponse insertPrinciple(@RequestBody Map<String, Object> params) {
+        String businessName = (String) params.get("businessName");
 
-        Principle principle = new Principle();
-        principle.setPrincipleName(principleName);
-        principle.setDepartment(department);
-        principle.setPosition(position);
-        principle.setMail(mail);
-        principle.setTel(tel);
-        principle.setPhone(phone);
-        principle.setFax(fax);
-        principle.setPostcode(postcode);
-        principle.setAddress(address);
-        principle.setFavorite(favorite);
-        principle.setComment(comment);
-        principle.setCreateUser("admin");
-        principle.setUpdateUser("admin");
+        Principle principle = principleService.assemblePrinciple(params);
 
-        System.out.println(principle.getPrincipleName());
-        System.out.println(principle.getDepartment());
         return principleService.insertPrinciple(principle, businessName);
     }
 
     @ResponseBody
     @RequestMapping(value = "updatePrinciple", method = RequestMethod.POST)
-    public ServerResponse updatePrinciple(@RequestBody Principle principle) {
-        if(principle == null) {
-            return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Argument Error");
-        }
+    public ServerResponse updatePrinciple(@RequestBody Map<String, Object> params) {
+        String businessName = (String) params.get("businessName");
 
-        return principleService.updatePrinciple(principle);
+        Principle principle = principleService.assemblePrinciple(params);
+
+        return principleService.updatePrinciple(principle, businessName);
     }
 
     @ResponseBody

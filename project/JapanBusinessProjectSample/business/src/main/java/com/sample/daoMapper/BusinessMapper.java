@@ -19,4 +19,9 @@ public interface BusinessMapper {
     int updateByPrimaryKey(Business record);
 
     List<Business> getBusinessNameByPrincipleId(@Param("principleId") Integer principleId);
+
+    int clearPrincipleId(Integer principleId);
+
+    int setPrincipleIdByName(@Param("businessName") String businessName,
+                             @Param("principleId") Integer principleId);
 }
