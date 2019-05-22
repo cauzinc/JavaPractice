@@ -145,8 +145,7 @@
                     comment: this.comment
                 }).then(res => {
                     if(res.data.status === 0) {
-                        alert('success')
-                        // this.goBack()
+                        this.goBack()
                     } else {
                         alert(res.data.msg)
                     }

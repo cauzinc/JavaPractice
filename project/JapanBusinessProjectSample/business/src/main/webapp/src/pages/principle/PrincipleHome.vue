@@ -44,7 +44,7 @@
                 this.$router.push({ name: 'principleCreate' })
             },
             go2Detail(id) {
-                this.$router.push({ name: 'principle', query: { principleI: id } })
+                this.$router.push({ name: 'principleDetail', query: { principleId: id } })
             }
         }
     }

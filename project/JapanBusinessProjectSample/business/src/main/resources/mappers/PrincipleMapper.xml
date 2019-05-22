@@ -223,7 +223,7 @@
   </update>
 
   <select id="getPrincipleWithBusinessInfo" resultMap="principleItemListResult">
-    select principle_name, business_name, tel
+    select sample_principle.id, principle_name, business_name, tel
     from sample_principle, sample_business
     where sample_business.principal_id = sample_principle.id
   </select>
