@@ -41,7 +41,7 @@
         methods: {
             ...principleMapActions(['getPrincipleList']),
             createNewPrinciple() {
-                this.$router.push({ name: 'principleDetail' })
+                this.$router.push({ name: 'principleCreate' })
             },
             go2Detail(id) {
                 this.$router.push({ name: 'principle', query: { principleI: id } })

@@ -22,12 +22,13 @@ public class PrincipleService {
         return ServerResponse.createBySuccess(principleListItemList);
     }
 
-    public ServerResponse insertPrinciple(Principle principle) {
-        int rowCount = principleMapper.insert(principle);
-        if(rowCount > 0) {
-            return ServerResponse.createBySuccessMessage("ok");
-        }
-        return ServerResponse.createByErrorMessage("Insert failed");
+    public ServerResponse insertPrinciple(Principle principle, String businessName) {
+        // 返回的id是在principle对象中，而不是方法的返回值，返回值依然是插入成功的数据的条数
+        Integer id = principleMapper.insertSelective(principle);
+        // todo businessName is not unique now
+        principleMapper.setBusinessPrincipleIdByName(businessName, principle.getId());
+
+        return ServerResponse.createBySuccessMessage("ok");
     }
 
     public ServerResponse updatePrinciple(Principle principle) {
