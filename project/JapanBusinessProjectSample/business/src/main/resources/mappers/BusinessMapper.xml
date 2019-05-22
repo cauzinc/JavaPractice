@@ -29,6 +29,12 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
+
+  <resultMap id="businessNameList" type="com.sample.pojo.Business" >
+    <constructor>
+      <arg column="business_name" jdbcType="VARCHAR" javaType="java.lang.String"></arg>
+    </constructor>
+  </resultMap>
   <sql id="Base_Column_List" >
     id, business_name, business_tel, business_fax, website, address, postcode, advantage_field, 
     bank_name, bank_branch_name, bank_number, bank_represent, stuff_num, annual_sales, 
@@ -314,4 +320,12 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--  当我们不返回对象的所有数据的时候 -->
+  <select id="getBusinessNameByPrincipleId" parameterType="map" resultMap="businessNameList">
+    select business_name
+    from sample_business
+    where principal_id = #{principleId}
+  </select>
+
 </mapper>

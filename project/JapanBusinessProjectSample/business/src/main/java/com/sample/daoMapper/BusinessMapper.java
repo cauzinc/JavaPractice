@@ -1,6 +1,9 @@
 package com.sample.daoMapper;
 
 import com.sample.pojo.Business;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface BusinessMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface BusinessMapper {
     int updateByPrimaryKeySelective(Business record);
 
     int updateByPrimaryKey(Business record);
+
+    List<Business> getBusinessNameByPrincipleId(@Param("principleId") Integer principleId);
 }

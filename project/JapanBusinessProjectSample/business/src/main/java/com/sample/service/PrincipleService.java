@@ -1,8 +1,11 @@
 package com.sample.service;
 
 import com.sample.common.ServerResponse;
+import com.sample.daoMapper.BusinessMapper;
 import com.sample.daoMapper.PrincipleMapper;
+import com.sample.pojo.Business;
 import com.sample.pojo.Principle;
+import com.sample.vo.PrincipleDetail;
 import com.sample.vo.PrincipleListItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +15,14 @@ import java.util.List;
 @Service
 public class PrincipleService {
     private PrincipleMapper principleMapper;
+    private BusinessMapper businessMapper;
     @Autowired
     public void setPrincipleMapper(PrincipleMapper principleMapper) {
         this.principleMapper = principleMapper;
+    }
+    @Autowired
+    public void setBusinessMapper(BusinessMapper businessMapper) {
+        this.businessMapper = businessMapper;
     }
 
     public ServerResponse getPrinciplePortalList() {
@@ -52,8 +60,28 @@ public class PrincipleService {
         if(principle == null) {
             return ServerResponse.createByErrorMessage("データは検索できません");
         }
-        principle.setId(null);
-        return ServerResponse.createBySuccess(principle);
+        StringBuilder businessName = new StringBuilder();
+        List<Business> businessList = businessMapper.getBusinessNameByPrincipleId(principle.getId());
+
+        for(Business business : businessList) {
+            if(business != null) {
+                businessName.append(business.getBusinessName()).append(" ");
+            }
+        }
+
+        PrincipleDetail principleDetail = new PrincipleDetail();
+        principleDetail.setPrincipleName(principle.getPrincipleName());
+        principleDetail.setAddress(principle.getAddress());
+        principleDetail.setPosition(principle.getPosition());
+        principleDetail.setDepartment(principle.getDepartment());
+        principleDetail.setBusinessName(businessName.toString());
+        principleDetail.setFavorite(principle.getFavorite());
+        principleDetail.setFax(principle.getFax());
+        principleDetail.setPhone(principle.getPhone());
+        principleDetail.setTel(principle.getTel());
+        principleDetail.setPostcode(principle.getPostcode());
+
+        return ServerResponse.createBySuccess(principleDetail);
     }
 
 }

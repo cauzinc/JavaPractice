@@ -81,6 +81,10 @@ public class Business {
         this.updateTime = updateTime;
     }
 
+    public Business(String businessName) {
+        this.businessName = businessName;
+    }
+
     public Business() {
         super();
     }
