@@ -3,6 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -78,7 +79,13 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             Controller: [path.join(__dirname, '../src/store/Service'), 'default']
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, '../static'),
+                to: 'static'
+            }
+        ])
     ]
 
 };

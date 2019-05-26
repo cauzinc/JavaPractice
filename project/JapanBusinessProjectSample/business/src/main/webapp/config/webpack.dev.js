@@ -23,14 +23,6 @@ let devConfig = merge(baseWebpack, {
             }
         },
         disableHostCheck: true
-    },
-    plugins: [
-        new CopyWebpackPlugin([
-            {
-                from: path.resolve(__dirname, '../static'),
-                to: 'static'
-            }
-        ])
-    ]
+    }
 });
 module.exports = devConfig;
