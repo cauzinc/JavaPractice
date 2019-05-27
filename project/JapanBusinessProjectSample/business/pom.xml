@@ -195,6 +195,7 @@
                 <executions>
                     <execution>
                         <id>Generate mybatis artifacts</id>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
