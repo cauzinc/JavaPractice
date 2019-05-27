@@ -45,14 +45,14 @@ public class PrincipleDaoTest {
         principle.setPosition("se");
         principle.setTel("1213131");
 
-        principleDao.insertPrinciple(principle);
+//        principleDao.insertPrinciple(principle);
     }
 
     @Test
     public void testUpdatePrinciple() {
         Principle principle = principleDao.getPrincipleById(20);
         principle.setMail("cauzinc@163.com");
-        principleDao.updatePrinciple(principle);
+//        principleDao.updatePrinciple(principle);
     }
 
     @Test

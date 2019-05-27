@@ -36,7 +36,7 @@ public class BusinessDaoTest {
         business.setBusinessName("Company");
         business.setBusinessTel("123333");
         business.setWebsite("company.com");
-        businessDao.quickInsert(business);
+//        businessDao.quickInsert(business);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BusinessDaoTest {
         business.setPrincipalId(20);
         business.setTransactionDeadline(new Date());
 
-        businessDao.insertBusiness(business);
+//        businessDao.insertBusiness(business);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class BusinessDaoTest {
 
         business.setStatus(1);
 
-        businessDao.updateBusiness(business);
+//        businessDao.updateBusiness(business);
     }
 
 
