@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sample.daoMapper.BusinessMapper" >
+  <resultMap id="BaseResultMap" type="com.sample.pojo.Business" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="business_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="business_tel" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="business_fax" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="website" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="postcode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="advantage_field" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_branch_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_represent" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="stuff_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="annual_sales" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="transaction_deadline" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="payment_sight" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="account_kind" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="comment" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="principal_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="businessNameList" type="com.sample.pojo.Business" >
+    <constructor>
+      <arg column="business_name" jdbcType="VARCHAR" javaType="java.lang.String"></arg>
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, business_name, business_tel, business_fax, website, address, postcode, advantage_field, 
+    bank_name, bank_branch_name, bank_number, bank_represent, stuff_num, annual_sales, 
+    transaction_deadline, payment_sight, account_kind, comment, principal_id, status, 
+    create_user, update_user, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sample_business
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sample_business
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sample.pojo.Business" >
+    insert into sample_business (id, business_name, business_tel, 
+      business_fax, website, address, 
+      postcode, advantage_field, bank_name, 
+      bank_branch_name, bank_number, bank_represent, 
+      stuff_num, annual_sales, transaction_deadline, 
+      payment_sight, account_kind, comment, 
+      principal_id, status, create_user, 
+      update_user, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{businessName,jdbcType=VARCHAR}, #{businessTel,jdbcType=VARCHAR}, 
+      #{businessFax,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{postcode,jdbcType=VARCHAR}, #{advantageField,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{bankBranchName,jdbcType=VARCHAR}, #{bankNumber,jdbcType=VARCHAR}, #{bankRepresent,jdbcType=VARCHAR}, 
+      #{stuffNum,jdbcType=INTEGER}, #{annualSales,jdbcType=DECIMAL}, #{transactionDeadline,jdbcType=TIMESTAMP}, 
+      #{paymentSight,jdbcType=VARCHAR}, #{accountKind,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{principalId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, 
+      #{updateUser,jdbcType=VARCHAR}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sample.pojo.Business" >
+    insert into sample_business
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="businessName != null" >
+        business_name,
+      </if>
+      <if test="businessTel != null" >
+        business_tel,
+      </if>
+      <if test="businessFax != null" >
+        business_fax,
+      </if>
+      <if test="website != null" >
+        website,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="postcode != null" >
+        postcode,
+      </if>
+      <if test="advantageField != null" >
+        advantage_field,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankBranchName != null" >
+        bank_branch_name,
+      </if>
+      <if test="bankNumber != null" >
+        bank_number,
+      </if>
+      <if test="bankRepresent != null" >
+        bank_represent,
+      </if>
+      <if test="stuffNum != null" >
+        stuff_num,
+      </if>
+      <if test="annualSales != null" >
+        annual_sales,
+      </if>
+      <if test="transactionDeadline != null" >
+        transaction_deadline,
+      </if>
+      <if test="paymentSight != null" >
+        payment_sight,
+      </if>
+      <if test="accountKind != null" >
+        account_kind,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="principalId != null" >
+        principal_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="businessName != null" >
+        #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTel != null" >
+        #{businessTel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessFax != null" >
+        #{businessFax,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="advantageField != null" >
+        #{advantageField,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankBranchName != null" >
+        #{bankBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNumber != null" >
+        #{bankNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankRepresent != null" >
+        #{bankRepresent,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffNum != null" >
+        #{stuffNum,jdbcType=INTEGER},
+      </if>
+      <if test="annualSales != null" >
+        #{annualSales,jdbcType=DECIMAL},
+      </if>
+      <if test="transactionDeadline != null" >
+        #{transactionDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentSight != null" >
+        #{paymentSight,jdbcType=VARCHAR},
+      </if>
+      <if test="accountKind != null" >
+        #{accountKind,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="principalId != null" >
+        #{principalId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        now(),
+      </if>
+      <if test="updateTime != null" >
+        now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sample.pojo.Business" >
+    update sample_business
+    <set >
+      <if test="businessName != null" >
+        business_name = #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTel != null" >
+        business_tel = #{businessTel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessFax != null" >
+        business_fax = #{businessFax,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="advantageField != null" >
+        advantage_field = #{advantageField,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankBranchName != null" >
+        bank_branch_name = #{bankBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNumber != null" >
+        bank_number = #{bankNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankRepresent != null" >
+        bank_represent = #{bankRepresent,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffNum != null" >
+        stuff_num = #{stuffNum,jdbcType=INTEGER},
+      </if>
+      <if test="annualSales != null" >
+        annual_sales = #{annualSales,jdbcType=DECIMAL},
+      </if>
+      <if test="transactionDeadline != null" >
+        transaction_deadline = #{transactionDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentSight != null" >
+        payment_sight = #{paymentSight,jdbcType=VARCHAR},
+      </if>
+      <if test="accountKind != null" >
+        account_kind = #{accountKind,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="principalId != null" >
+        principal_id = #{principalId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = now(),
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sample.pojo.Business" >
+    update sample_business
+    set business_name = #{businessName,jdbcType=VARCHAR},
+      business_tel = #{businessTel,jdbcType=VARCHAR},
+      business_fax = #{businessFax,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      advantage_field = #{advantageField,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_branch_name = #{bankBranchName,jdbcType=VARCHAR},
+      bank_number = #{bankNumber,jdbcType=VARCHAR},
+      bank_represent = #{bankRepresent,jdbcType=VARCHAR},
+      stuff_num = #{stuffNum,jdbcType=INTEGER},
+      annual_sales = #{annualSales,jdbcType=DECIMAL},
+      transaction_deadline = #{transactionDeadline,jdbcType=TIMESTAMP},
+      payment_sight = #{paymentSight,jdbcType=VARCHAR},
+      account_kind = #{accountKind,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      principal_id = #{principalId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--  当我们不返回对象的所有数据的时候, 要设计对应的映射 -->
+  <select id="getBusinessNameByPrincipleId" parameterType="map" resultMap="businessNameList">
+    select business_name
+    from sample_business
+    where principal_id = #{principleId}
+  </select>
+
+  <update id="clearPrincipleId" parameterType="java.lang.Integer">
+    update sample_business
+    set principal_id = null
+    where principal_id = #{principleId}
+  </update>
+
+  <update id="setPrincipleIdByName" parameterType="map">
+    update sample_business
+    set principal_id = #{principleId}
+    where business_name = #{businessName}
+  </update>
+
+</mapper>
