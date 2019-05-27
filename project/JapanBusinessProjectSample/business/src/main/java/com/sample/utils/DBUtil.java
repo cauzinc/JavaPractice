@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DBUtil {
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/Japan-project-sample?useSSL=false";
-    private static final String USER = "root";
+    private static final String URL = "jdbc:mysql://193.112.14.164:3306/japan_project_sample?useSSL=false";
+    private static final String USER = "cauzinc";
     private static final String PASSWORD = "123456";
 
     private static Connection conn = null;
