@@ -1,22 +1,22 @@
 <template>
     <div id="app">
-        <div class="main-container">
+        <div :class="$style['main-container']">
             <main-header></main-header>
-            <div class="main-content-box">
-                <aside class="aside">
+            <div :class="$style['main-content-box']">
+                <aside :class="$style.aside">
                     <business-support-menu style="margin-bottom: 10px"></business-support-menu>
                     <common-business></common-business>
                 </aside>
-                <div class="main-content">
-                    <div class="title-box">
+                <div :class="$style['main-content']">
+                    <div :class="$style['title-box']">
                         <span>営業プラス</span>
                     </div>
-                    <div class="tag-box">
-                        <div @click="select(index)" class="tag" :class="{ active: index === currentPageIndex }" v-for="(tag, index) in menu">
+                    <div :class="$style['tag-box']">
+                        <div @click="select(index)" :class="[$style.tag, {[$style.active]: index === currentPageIndex}]" v-for="(tag, index) in menu">
                             {{tag.name}}
                         </div>
                     </div>
-                    <div class="page-content">
+                    <div :class="$style['page-content']">
                         <router-view />
                     </div>
                 </div>
@@ -72,7 +72,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
     .main-container{
         padding: 30px;
         .main-content-box {

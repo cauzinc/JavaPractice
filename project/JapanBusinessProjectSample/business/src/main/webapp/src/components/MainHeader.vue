@@ -1,6 +1,6 @@
 <template>
-    <header class="header">
-        <h3 class="title">営業プラス管理システム</h3>
+    <header :class="$style.header">
+        <h3 :class="$style.title">営業プラス管理システム</h3>
     </header>
 </template>
 
@@ -10,7 +10,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 .header {
     border: 2px solid $main-border-color;
     padding: 0 20px;

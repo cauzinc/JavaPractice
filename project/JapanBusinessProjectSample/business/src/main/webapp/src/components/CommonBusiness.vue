@@ -1,25 +1,25 @@
 <template>
-    <div class="common-business-container">
-        <div class="title">
+    <div :class="$style['common-business-container']">
+        <div :class="$style.title">
             <h4>通常業務</h4>
         </div>
-        <div class="main">
+        <div :class="$style.main">
 
-            <div class="business-box">
-                <div class="menu-box" v-for="menu in businessList">
+            <div :class="$style['business-box']">
+                <div :class="$style['menu-box']" v-for="menu in businessList">
                     <p>{{menu.title}}</p>
-                    <ul class="list">
-                        <li v-for="item in menu.items" class="list-item">
+                    <ul :class="$style.list">
+                        <li v-for="item in menu.items" :class="$style['list-item']">
                             <a href="#">{{item}}</a>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="quick-insert" v-if="insertBusinessPage.indexOf($route.name) >= 0">
-                <p class="item-content">簡易作成</p>
-                <div class="form-box">
-                    <div class="form">
+            <div :class="$style['quick-insert']" v-if="insertBusinessPage.indexOf($route.name) >= 0">
+                <p :class="$style['item-content']">簡易作成</p>
+                <div :class="$style['form-box']">
+                    <div :class="$style.form">
                         <label for="name">*取引名</label> <br />
                         <input id="name" type="text" v-model="businessName" /> <br />
 
@@ -88,7 +88,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
     .common-business-container {
         border: 1px solid $main-border-color;
         .title {

@@ -1,15 +1,15 @@
 <template>
-    <div class="business-support-menu-container">
-        <div class="title">
+    <div :class="$style['business-support-menu-container']">
+        <div :class="$style.title">
             <h4>業務支援メニュー</h4>
         </div>
-        <div class="main">
-            <div class="create">
-                <a href="#" class="item-content">新規作成</a>
+        <div :class="$style.main">
+            <div :class="$style.create">
+                <a href="#" :class="$style['item-content']">新規作成</a>
             </div>
-            <div class="recent-date">
-                <p class="item-content">最近使ったデータ</p>
-                <ul class="data-menu">
+            <div :class="$style['recent-date']">
+                <p :class="$style['item-content']">最近使ったデータ</p>
+                <ul :class="$style['data-menu']">
                     <li v-for="(item, index) in recentData">
                         <a href="#">{{item.name}}</a>
                     </li>
@@ -36,7 +36,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 .business-support-menu-container {
     border: 1px solid $main-border-color;
     .title {
