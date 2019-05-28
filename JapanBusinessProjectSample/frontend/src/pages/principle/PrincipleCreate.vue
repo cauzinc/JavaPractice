@@ -30,7 +30,7 @@
                     </div>
                     <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
-                            <span :class="$style.label" style="color: red">取引先名</span>
+                            <span :class="$style.label" style="color: red">* 取引先名</span>
                             <input :class="$style.item" type="text" v-model="businessName" />
                         </div>
                         <div :class="$style['item-wrapper']">
@@ -85,11 +85,11 @@
             <div :class="[$style.wrapper, $style['system-info']] ">
                 <div :class="$style['info-title']">担当者追加情報</div>
                 <div :class="$style['info-content']">
-                    <div :class="$style.line-comment">
+                    <div :class="$style['line-comment']">
                         <div :class="$style.label">備考</div>
-                        <textarea :class="$style.comment-area" name="comment" v-model="comment"></textarea>
+                        <textarea :class="$style['comment-area']" name="comment" v-model="comment"></textarea>
                     </div>
-                    <div :class="$style.btn-box">
+                    <div :class="$style['btn-box']">
                         <button :class="$style.btn" @click="save()">保存</button>
                         <button :class="$style.btn" @click="save()">保存して新しく作成</button>
                         <button :class="$style.btn" @click="goBack()">キャンセル</button>

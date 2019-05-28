@@ -2,8 +2,8 @@
     <div :class="$style['principle-home-container']">
         <portal-info-list @go2Detail="go2Detail" @go2Create="createNewPrinciple()" :titleList="['担当者名', '取引先名', '電話']" :infoList="principleList" style="margin-bottom: 30px;"></portal-info-list>
         <div :class="$style['other-info']">
-            <portal-column :class="$style.column" :infoList="reportList" title="レポート"></portal-column>
-            <portal-column :class="$style.column" :infoList="toolList" title="ツール"></portal-column>
+            <portal-column :class="$style.column" style="width: 45%;" :infoList="reportList" title="レポート"></portal-column>
+            <portal-column :class="$style.column" style="width: 45%;" :infoList="toolList" title="ツール"></portal-column>
         </div>
     </div>
 </template>

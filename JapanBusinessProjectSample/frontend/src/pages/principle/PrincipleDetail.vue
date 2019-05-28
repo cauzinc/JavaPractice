@@ -152,8 +152,11 @@
                 if(!this.$route.query.principleId) {
                     return alert("data error!");
                 }
+                if(!this.principleName.trim()) {
+                	return alert("名前の入力が必要です");
+                }
                 this.updatePrinciple({
-                    id: this.$route.query.principleId,
+                    id: parseInt(this.$route.query.principleId),
                     principleName: this.principleName,
                     department: this.department,
                     businessName: this.businessName,

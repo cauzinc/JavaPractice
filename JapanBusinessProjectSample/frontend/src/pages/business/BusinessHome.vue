@@ -2,8 +2,8 @@
     <div :class="$style['business-home-container']">
         <portal-info-list @go2Detail="go2Detail" @go2Create="createNewBusiness()" :titleList="titleList" :infoList="businessList" style="margin-bottom: 30px;"></portal-info-list>
         <div :class="$style['other-info']">
-            <portal-column class="column" :infoList="reportList" title="レポート"></portal-column>
-            <portal-column class="column" :infoList="toolList" title="ツール"></portal-column>
+            <portal-column :class="$style.column" :infoList="reportList" title="レポート"></portal-column>
+            <portal-column :class="$style.column" :infoList="toolList" title="ツール"></portal-column>
         </div>
     </div>
 </template>

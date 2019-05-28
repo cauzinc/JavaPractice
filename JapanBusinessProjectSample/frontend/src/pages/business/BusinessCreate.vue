@@ -149,7 +149,7 @@
         methods: {
             ...businessMapActions(['insertBusiness']),
             goBack() {
-                this.$router.push({ name: "BusinessHome" });
+                this.$router.push({ name: "businessHome" });
             },
             save() {
                 if(!this.businessName.trim()) {
