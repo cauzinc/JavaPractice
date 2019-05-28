@@ -5,6 +5,7 @@
 
 #webpack file
 Project/JapanBusinessProjectSample/business/src/main/webapp/dist/
+**/frontend/dist/
 
 #package file
 *.war
