@@ -36,9 +36,7 @@ public class PrincipleController {
     @RequestMapping(value = "insertPrinciple", method = RequestMethod.POST)
     public ServerResponse insertPrinciple(@RequestBody Map<String, Object> params) {
         String businessName = (String) params.get("businessName");
-
         Principle principle = principleService.assemblePrinciple(params);
-
         return principleService.insertPrinciple(principle, businessName);
     }
 
@@ -54,7 +52,7 @@ public class PrincipleController {
 
     @ResponseBody
     @RequestMapping(value = "deletePrincipleById", method = RequestMethod.GET)
-    public ServerResponse updatePrinciple(Integer principleId) {
+    public ServerResponse deletePrinciple(Integer principleId) {
         if(principleId == null) {
             return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Argument Error");
         }

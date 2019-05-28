@@ -59,7 +59,7 @@
       now())
   </insert>
 
-  <insert useGeneratedKeys="true" keyProperty="id" id="insertSelective" parameterType="com.sample.pojo.Principle" >
+  <insert parameterType="com.sample.pojo.Principle" useGeneratedKeys="true" keyProperty="id" id="insertSelective" >
     insert into sample_principle
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

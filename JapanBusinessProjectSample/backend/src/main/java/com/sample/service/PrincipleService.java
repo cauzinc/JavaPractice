@@ -46,9 +46,9 @@ public class PrincipleService {
         if(!ifBusinessExist.isSuccess()) {
             return ifBusinessExist;
         }
-
         // 返回的id是在principle对象中，而不是方法的返回值，返回值依然是插入成功的数据的条数
         principleMapper.insertSelective(principle);
+
         // todo businessName is not unique now
         principleMapper.setBusinessPrincipleIdByName(businessName, principle.getId());
 
@@ -56,10 +56,14 @@ public class PrincipleService {
     }
 
     public ServerResponse updatePrinciple(Principle principle, String businessName) {
+        ServerResponse ifBusinessExist = this.checkIfBusinessExist(businessName);
+        if(!ifBusinessExist.isSuccess()) {
+            return ifBusinessExist;
+        }
+
         // judge if business charged has changed
         boolean ifChargeBusinessChanged = true;
-        int businessId = 0;
-        Principle principleCopy = principleMapper.selectByPrimaryKey(principle.getId());
+
         List<Business> businessList = businessMapper.getBusinessNameByPrincipleId(principle.getId());
         for(Business business : businessList) {
             if(business.getBusinessName().equals(businessName.trim())) {
@@ -120,21 +124,46 @@ public class PrincipleService {
     public Principle assemblePrinciple(Map<String, Object> params) {
         Principle principle = new Principle();
         if(params.get("id") != null) {
-            principle.setId(Integer.valueOf((String) params.get("id")));
+            int id = (Integer)params.get("id");
+            principle.setId(id);
         }
-        principle.setPrincipleName((String)params.get("principleName"));
-        principle.setDepartment((String)params.get("department"));
-        principle.setPosition((String)params.get("position"));
-        principle.setMail((String)params.get("mail"));
-        principle.setTel((String)params.get("tel"));
-        principle.setPhone((String)params.get("phone"));
-        principle.setFax((String)params.get("fax"));
-        principle.setPostcode((String)params.get("postcode"));
-        principle.setAddress((String)params.get("address"));
-        principle.setFavorite((String)params.get("favorite"));
-        principle.setComment((String)params.get("comment"));
+
+        if(params.get("principleName") != null) {
+            principle.setPrincipleName((String)params.get("principleName"));
+        }
+        if(params.get("department") != null) {
+            principle.setDepartment((String)params.get("department"));
+        }
+        if(params.get("position") != null) {
+            principle.setPosition((String)params.get("position"));
+        }
+        if(params.get("mail") != null) {
+            principle.setMail((String)params.get("mail"));
+        }
+        if(params.get("tel") != null) {
+            principle.setTel((String)params.get("tel"));
+        }
+        if(params.get("phone") != null) {
+            principle.setPhone((String)params.get("phone"));
+        }
+        if(params.get("fax") != null) {
+            principle.setFax((String)params.get("fax"));
+        }
+        if(params.get("postcode") != null) {
+            principle.setPostcode((String)params.get("postcode"));
+        }
+        if(params.get("address") != null) {
+            principle.setAddress((String)params.get("address"));
+        }
+        if(params.get("favorite") != null) {
+            principle.setFavorite((String)params.get("favorite"));
+        }
+        if(params.get("comment") != null) {
+            principle.setComment((String)params.get("comment"));
+        }
         principle.setCreateUser("admin");
         principle.setUpdateUser("admin");
+
 
         return principle;
     }
