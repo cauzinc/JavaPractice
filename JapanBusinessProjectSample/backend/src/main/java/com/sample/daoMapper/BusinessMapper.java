@@ -14,6 +14,8 @@ public interface BusinessMapper {
 
     Business selectByPrimaryKey(Integer id);
 
+    Business selectByName(String name);
+
     int updateByPrimaryKeySelective(Business record);
 
     int updateByPrimaryKey(Business record);

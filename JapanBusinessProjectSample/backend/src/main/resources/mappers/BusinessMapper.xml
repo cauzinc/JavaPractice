@@ -328,6 +328,12 @@
     where principal_id = #{principleId}
   </select>
 
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select business_name
+    from sample_business
+    where business_name = #{name}
+  </select>
+
   <update id="clearPrincipleId" parameterType="java.lang.Integer">
     update sample_business
     set principal_id = null
@@ -339,5 +345,6 @@
     set principal_id = #{principleId}
     where business_name = #{businessName}
   </update>
+
 
 </mapper>

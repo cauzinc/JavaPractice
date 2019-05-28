@@ -15,7 +15,8 @@
 
 #maven ignore
 Project/myMail/target/
-Project/JapanBusinessProjectSample/business/target/
+JapanBusinessProjectSample/backend/target/
+**/target/
 Project/JapanBusinessProjectSample/out/
 
 #eclipse igonore

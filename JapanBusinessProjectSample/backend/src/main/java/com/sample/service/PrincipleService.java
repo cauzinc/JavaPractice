@@ -31,9 +31,24 @@ public class PrincipleService {
         return ServerResponse.createBySuccess(principleListItemList);
     }
 
+    public ServerResponse checkIfBusinessExist(String name) {
+        Business business = businessMapper.selectByName(name);
+        if(business == null) {
+            return ServerResponse.createByErrorMessage("入力した取引先はいません､ まずは取引先情報を作成してください｡");
+        } else {
+            return ServerResponse.createBySuccessMessage("ok");
+        }
+    }
+
     public ServerResponse insertPrinciple(Principle principle, String businessName) {
+        // check if business exists
+        ServerResponse ifBusinessExist = this.checkIfBusinessExist(businessName);
+        if(!ifBusinessExist.isSuccess()) {
+            return ifBusinessExist;
+        }
+
         // 返回的id是在principle对象中，而不是方法的返回值，返回值依然是插入成功的数据的条数
-        Integer id = principleMapper.insertSelective(principle);
+        principleMapper.insertSelective(principle);
         // todo businessName is not unique now
         principleMapper.setBusinessPrincipleIdByName(businessName, principle.getId());
 
