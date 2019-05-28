@@ -3,9 +3,8 @@
 #npm file
 **/node_modules/
 
-#webpack file
-Project/JapanBusinessProjectSample/business/src/main/webapp/dist/
-**/frontend/dist/
+#webpack packaged file // it should be uploaded
+
 
 #package file
 *.war
