@@ -193,7 +193,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
     .principle-detail-container{
         .title {
             width: 100%;
