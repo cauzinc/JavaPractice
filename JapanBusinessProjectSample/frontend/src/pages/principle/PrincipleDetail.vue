@@ -1,102 +1,102 @@
 <template>
-    <div class="principle-detail-container">
-        <div class="title">
-            <h3 class="text">取引先担当者情報</h3>
+    <div :class="$style['principle-detail-container']">
+        <div :class="$style.title">
+            <h3 :class="$style.text">取引先担当者情報</h3>
         </div>
-        <div class="btn-box" v-if="!editMode">
-            <button class="btn" @click="edit()">編集</button>
-            <button class="btn" @click="deleteInfo()">削除</button>
-            <button class="btn">コピー</button>
+        <div :class="$style['btn-box']" v-if="!editMode">
+            <button :class="$style.btn" @click="edit()">編集</button>
+            <button :class="$style.btn" @click="deleteInfo()">削除</button>
+            <button :class="$style.btn">コピー</button>
         </div>
-        <div class="btn-box" v-else>
-            <button class="btn" @click="update()">保存</button>
-            <button class="btn" @click="update()">保存して新しく作成</button>
-            <button class="btn" @click="cancel()">キャンセル</button>
+        <div :class="$style['btn-box']" v-else>
+            <button :class="$style.btn" @click="update()">保存</button>
+            <button :class="$style.btn" @click="update()">保存して新しく作成</button>
+            <button :class="$style.btn" @click="cancel()">キャンセル</button>
         </div>
 
-        <div class="detail-box">
-            <div class="wrapper basic-info">
-                <div class="info-title">取引先担当者情報</div>
-                <div class="info-content">
-                    <div class="line">
-                        <div class="item-wrapper" style="margin-bottom: 30px;">
-                            <span class="label" style="width: auto">取引先担当者所有者</span>
-                            <span class="item">田中 雄一</span>
+        <div :class="$style['detail-box']">
+            <div :class="[$style.wrapper, $style['basic-info']]">
+                <div :class="$style['info-title']">取引先担当者情報</div>
+                <div :class="$style['info-content']">
+                    <div :class="$style.line">
+                        <div :class="$style['item-wrapper']" style="margin-bottom: 30px;">
+                            <span :class="$style.label" style="width: auto">取引先担当者所有者</span>
+                            <span :class="$style.item">田中 雄一</span>
                         </div>
                     </div>
-                    <div class="line">
-                        <div class="item-wrapper">
-                            <span class="label">名前</span>
-                            <span v-if="!editMode" class="item">{{principleName}}</span>
+                    <div :class="$style.line">
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">名前</span>
+                            <span v-if="!editMode" :class="$style.item">{{principleName}}</span>
                             <input v-else v-model="principleName" type="text" />
 
                         </div>
-                        <div class="item-wrapper">
-                            <span class="label">部署</span>
-                            <span v-if="!editMode" class="item">{{department}}</span>
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">部署</span>
+                            <span v-if="!editMode" :class="$style.item">{{department}}</span>
                             <input v-else v-model="department" type="text" />
                         </div>
                     </div>
-                    <div class="line">
-                        <div class="item-wrapper">
-                            <span class="label">取引先名</span>
-                            <span v-if="!editMode" class="item">{{businessName}}</span>
+                    <div :class="$style.line">
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">取引先名</span>
+                            <span v-if="!editMode" :class="$style.item">{{businessName}}</span>
                             <input v-else v-model="businessName" type="text" />
                         </div>
-                        <div class="item-wrapper">
-                            <span class="label">役職</span>
-                            <span v-if="!editMode" class="item">{{position}}</span>
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">役職</span>
+                            <span v-if="!editMode" :class="$style.item">{{position}}</span>
                             <input v-else v-model="position" type="text" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="wrapper detail-info">
-                <div class="info-title">詳細情報</div>
-                <div class="info-content">
-                    <div class="line">
-                        <div class="item-wrapper">
-                            <span class="label">メール</span>
-                            <span v-if="!editMode" class="item">{{mail}}</span>
+            <div :class="[$style.wrapper, $style['detail-info']]">
+                <div :class="$style['info-title']">詳細情報</div>
+                <div :class="$style['info-content']">
+                    <div :class="$style.line">
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">メール</span>
+                            <span v-if="!editMode" :class="$style.item">{{mail}}</span>
                             <input v-else v-model="mail" type="text" />
                         </div>
-                        <div class="item-wrapper">
-                            <span class="label">FAX</span>
-                            <span v-if="!editMode" class="item">{{fax}}</span>
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">FAX</span>
+                            <span v-if="!editMode" :class="$style.item">{{fax}}</span>
                             <input v-else v-model="fax" type="text" />
                         </div>
                     </div>
-                    <div class="line">
-                        <div class="item-wrapper">
-                            <span class="label">電話番号</span>
-                            <span v-if="!editMode" class="item">{{tel}}</span>
+                    <div :class="$style.line">
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">電話番号</span>
+                            <span v-if="!editMode" :class="$style.item">{{tel}}</span>
                             <input v-else v-model="tel" type="text" />
                         </div>
-                        <div class="item-wrapper">
-                            <span class="label">携帯番号</span>
-                            <span v-if="!editMode" class="item">{{phone}}</span>
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">携帯番号</span>
+                            <span v-if="!editMode" :class="$style.item">{{phone}}</span>
                             <input v-else v-model="phone" type="text" />
                         </div>
                     </div>
-                    <div class="line">
-                        <div class="item-wrapper">
-                            <span class="label">住所</span>
-                            <span v-if="!editMode" class="item">{{address}}</span>
+                    <div :class="$style.line">
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">住所</span>
+                            <span v-if="!editMode" :class="$style.item">{{address}}</span>
                             <input v-else v-model="address" type="text" />
                         </div>
-                        <div class="item-wrapper">
-                            <span class="label">郵便コード</span>
-                            <span v-if="!editMode" class="item">{{postcode}}</span>
+                        <div :class="$style['item-wrapper']">
+                            <span :class="$style.label">郵便コード</span>
+                            <span v-if="!editMode" :class="$style.item">{{postcode}}</span>
                             <input v-else v-model="postcode" type="text" />
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="btn-box" v-if="editMode">
-                <button class="btn" @click="update()">保存</button>
-                <button class="btn" @click="update()">保存して新しく作成</button>
-                <button class="btn" @click="cancel()">キャンセル</button>
+            <div :class="$style['btn-box']" v-if="editMode">
+                <button :class="$style.btn" @click="update()">保存</button>
+                <button :class="$style.btn" @click="update()">保存して新しく作成</button>
+                <button :class="$style.btn" @click="cancel()">キャンセル</button>
             </div>
 
         </div>

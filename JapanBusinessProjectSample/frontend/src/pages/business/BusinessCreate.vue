@@ -18,7 +18,7 @@
                             <span :class="$style.item">田中 雄一</span>
                         </div>
                     </div>
-                    <div :class="line">
+                    <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label" style="color: red">* 取引名</span>
                             <input :class="$style.item" type="text" v-model="businessName" />
@@ -28,7 +28,7 @@
                             <input :class="$style.item" type="text" v-model="businessFax" />
                         </div>
                     </div>
-                    <div :class="line">
+                    <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">電話番号</span>
                             <input :class="$style.item" type="text" v-model="businessTel" />
@@ -43,7 +43,7 @@
             <div :class="[$style.wrapper, $style['detail-info']]">
                 <div :class="$style['info-title']">詳細情報</div>
                 <div :class="$style['info-content']">
-                    <div :class="line">
+                    <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">住所</span>
                             <input :class="$style.item" type="text" v-model="address" />
@@ -53,7 +53,7 @@
                             <input :class="$style.item" type="text" v-model="postcode" />
                         </div>
                     </div>
-                    <div :class="line">
+                    <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">得意分野</span>
                             <input :class="$style.item" type="text" v-model="advantageField" />
@@ -63,7 +63,7 @@
                             <input :class="$style.item" type="text" v-model="stuffNum" />
                         </div>
                     </div>
-                    <div :class="line">
+                    <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">取引先の種別</span>
                             <input :class="$style.item" type="text" v-model="accountKind" />
@@ -73,7 +73,7 @@
                             <input :class="$style.item" type="text" v-model="annualSales" />
                         </div>
                     </div>
-                    <div :class="line">
+                    <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">銀行名</span>
                             <input :class="$style.item" type="text" v-model="bankName" />
@@ -83,7 +83,7 @@
                             <input :class="$style.item" type="text" v-model="bankBranchName" />
                         </div>
                     </div>
-                    <div :class="line">
+                    <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">口座番号</span>
                             <input :class="$style.item" type="text" v-model="bankNumber" />
@@ -93,7 +93,7 @@
                             <input :class="$style.item" type="text" v-model="paymentSight" />
                         </div>
                     </div>
-                    <div :class="line">
+                    <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">名義人</span>
                             <input :class="$style.item" type="text" v-model="bankRepresent" />
@@ -116,9 +116,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </template>
 

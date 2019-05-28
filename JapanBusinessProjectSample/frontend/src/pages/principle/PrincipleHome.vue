@@ -1,9 +1,9 @@
 <template>
-    <div class="principle-home-container">
+    <div :class="$style['principle-home-container']">
         <portal-info-list @go2Detail="go2Detail" @go2Create="createNewPrinciple()" :titleList="['担当者名', '取引先名', '電話']" :infoList="principleList" style="margin-bottom: 30px;"></portal-info-list>
-        <div class="other-info">
-            <portal-column class="column" :infoList="reportList" title="レポート"></portal-column>
-            <portal-column class="column" :infoList="toolList" title="ツール"></portal-column>
+        <div :class="$style['other-info']">
+            <portal-column :class="$style.column" :infoList="reportList" title="レポート"></portal-column>
+            <portal-column :class="$style.column" :infoList="toolList" title="ツール"></portal-column>
         </div>
     </div>
 </template>
@@ -50,7 +50,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 .principle-home-container {
     padding: 30px 10px;
     .other-info {
