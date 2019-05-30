@@ -11,7 +11,7 @@ public class Staff {
 
     private String position;
 
-    private String businessId;
+    private Integer businessId;
 
     private String preferedField;
 
@@ -45,7 +45,7 @@ public class Staff {
 
     private Date updateTime;
 
-    public Staff(Integer id, String staffName, Integer staffGender, String position, String businessId, String preferedField, String preferedLanguage, String mail, String tel, Date birthday, String postcode, String address, String emergencyAddress, String cloestStation, String favorite, String note, String comment, String createUser, String updateUser, Date createTime, Date updateTime) {
+    public Staff(Integer id, String staffName, Integer staffGender, String position, Integer businessId, String preferedField, String preferedLanguage, String mail, String tel, Date birthday, String postcode, String address, String emergencyAddress, String cloestStation, String favorite, String note, String comment, String createUser, String updateUser, Date createTime, Date updateTime) {
         this.id = id;
         this.staffName = staffName;
         this.staffGender = staffGender;
@@ -105,12 +105,12 @@ public class Staff {
         this.position = position == null ? null : position.trim();
     }
 
-    public String getBusinessId() {
+    public Integer getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(String businessId) {
-        this.businessId = businessId == null ? null : businessId.trim();
+    public void setBusinessId(Integer businessId) {
+        this.businessId = businessId;
     }
 
     public String getPreferedField() {
