@@ -2,6 +2,8 @@ package com.sample.daoMapper;
 
 import com.sample.pojo.Staff;
 
+import java.util.List;
+
 public interface StaffMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,8 @@ public interface StaffMapper {
     int updateByPrimaryKeySelective(Staff record);
 
     int updateByPrimaryKey(Staff record);
+
+    List<Staff> getStaffList();
+
+
 }

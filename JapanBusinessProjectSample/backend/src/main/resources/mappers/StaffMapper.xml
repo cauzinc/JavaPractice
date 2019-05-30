@@ -278,4 +278,10 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getStaffList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sample_staff
+  </select>
 </mapper>
