@@ -56,7 +56,7 @@
       #{birthday,jdbcType=TIMESTAMP}, #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{emergencyAddress,jdbcType=VARCHAR}, #{cloestStation,jdbcType=VARCHAR}, #{favorite,jdbcType=VARCHAR}, 
       #{note,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
-      #{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{updateUser,jdbcType=VARCHAR}, now(), now()
       )
   </insert>
   <insert id="insertSelective" parameterType="com.sample.pojo.Staff" >
@@ -185,10 +185,10 @@
         #{updateUser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        now()
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        now()
       </if>
     </trim>
   </insert>
@@ -249,11 +249,8 @@
       <if test="updateUser != null" >
         update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = now(),
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -278,8 +275,7 @@
       comment = #{comment,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       update_user = #{updateUser,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
