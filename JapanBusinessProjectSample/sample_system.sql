@@ -37,6 +37,37 @@ CREATE TABLE `sample_business` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+--  Table structure for `sample_staff`
+-- ----------------------------
+DROP TABLE IF EXISTS `sample_staff`;
+CREATE TABLE `sample_staff` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `staff_name` varchar(20) NOT NULL,
+    `staff_gender` int(2) DEFAULT 1,
+    `position` varchar(20) DEFAULT NULL,
+    `business_id` varchar(20) NOT NULL,
+    `prefered_field` varchar(20) DEFAULT NULL,
+    `prefered_language` varchar(20) DEFAULT NULL,
+
+    `mail` varchar(20) DEFAULT NULL,
+    `tel` varchar(20) DEFAULT NULL,
+    `birthday` datetime DEFAULT NULL,
+    `postcode` varchar(20) DEFAULT NULL,
+    `address` varchar(20) DEFAULT NULL,
+    `emergency_address` varchar(20) DEFAULT NULL,
+    `cloest_station` varchar(20) DEFAULT NULL,
+    `favorite` varchar(30) DEFAULT NULL,
+    `note` varchar(200) DEFAULT NULL COMMENT '評価',
+    `comment` varchar(200) DEFAULT NULL COMMENT '追加情報',
+
+    `create_user` varchar(20) NOT NULL COMMENT '作成者',
+    `update_user` varchar(20) NOT NULL COMMENT '最終更新者',
+    `create_time` datetime DEFAULT NULL COMMENT '作成時点',
+    `update_time` datetime DEFAULT NULL COMMENT '更新時点',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 
 -- ----------------------------
 --  Records of `sample_business`
