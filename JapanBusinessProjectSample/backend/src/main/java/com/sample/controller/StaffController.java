@@ -95,8 +95,8 @@ public class StaffController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "deletePrincipleById", method = RequestMethod.GET)
-    public ServerResponse deletePrinciple(Integer staffId) {
+    @RequestMapping(value = "deleteStaffById", method = RequestMethod.GET)
+    public ServerResponse deleteStaffById(Integer staffId) {
         if(staffId == null) {
             return ServerResponse.createByErrorErrorCode(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "Argument Error");
         }
