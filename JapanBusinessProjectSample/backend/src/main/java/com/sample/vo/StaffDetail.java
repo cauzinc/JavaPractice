@@ -1,9 +1,13 @@
 package com.sample.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StaffDetail {
 
+    private Integer staffId;
 
     private String staffName;
 
@@ -41,8 +45,39 @@ public class StaffDetail {
 
     private String updateUser;
 
+    public Integer getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
+    }
     public String getStaffName() {
         return staffName;
+    }
+
+    public StaffDetail() { }
+
+    public StaffDetail(Integer staffId, String staffName, Integer staffGender, String position, String businessName, String preferedField, String preferedLanguage, String mail, String tel, Date birthday, String postcode, String address, String emergencyAddress, String cloestStation, String favorite, String note, String comment, String createUser, String updateUser) {
+        this.staffId = staffId;
+        this.staffName = staffName;
+        this.staffGender = staffGender;
+        this.position = position;
+        this.businessName = businessName;
+        this.preferedField = preferedField;
+        this.preferedLanguage = preferedLanguage;
+        this.mail = mail;
+        this.tel = tel;
+        this.birthday = birthday;
+        this.postcode = postcode;
+        this.address = address;
+        this.emergencyAddress = emergencyAddress;
+        this.cloestStation = cloestStation;
+        this.favorite = favorite;
+        this.note = note;
+        this.comment = comment;
+        this.createUser = createUser;
+        this.updateUser = updateUser;
     }
 
     public void setStaffName(String staffName) {

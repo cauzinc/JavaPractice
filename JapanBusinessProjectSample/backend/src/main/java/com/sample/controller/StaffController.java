@@ -33,15 +33,21 @@ public class StaffController {
 
     @ResponseBody
     @RequestMapping(value = "quickInsert", method = RequestMethod.POST)
-    public ServerResponse quickInsert(@RequestBody Staff staff) {
-        String name = staff.getStaffName();
+    public ServerResponse quickInsert(@RequestBody StaffDetail staffDetail) {
+        String name = staffDetail.getStaffName();
         if(name == null || "".equals(name.trim())) {
             return ServerResponse.createByErrorMessage("スタッフ名は必要です｡");
         }
-        staff.setCreateUser("admin");
-        staff.setUpdateUser("admin");
+        ServerResponse<Staff> response = iStaffService.assembleStaff(staffDetail);
+        if(!response.isSuccess()) {
+            return response;
+        }
+        staffDetail.setCreateUser("admin");
+        staffDetail.setUpdateUser("admin");
+
+        Staff staff = response.getData();
         staffMapper.insertSelective(staff);
-        return ServerResponse.createBySuccess(staff);
+        return ServerResponse.createBySuccess(staffDetail);
     }
 
     @ResponseBody
@@ -75,11 +81,15 @@ public class StaffController {
     @ResponseBody
     @RequestMapping(value = "updateStaff", method = RequestMethod.POST)
     public ServerResponse updateStaff(@RequestBody StaffDetail staffDetail) {
+
         ServerResponse<Staff> response = iStaffService.assembleStaff(staffDetail);
         if(!response.isSuccess()) {
             return response;
         }
         Staff staff = response.getData();
+
+        staff.setId(staffDetail.getStaffId());
+
         staffMapper.updateByPrimaryKeySelective(staff);
         return ServerResponse.createBySuccess("ok");
     }
@@ -102,7 +112,7 @@ public class StaffController {
         int staffId = (Integer) params.get("staffId");
         String comment = "";
         comment += businessExperience == 0 ? "業務知識経験ある､" : "業務知識経験ない､";
-        comment += leaderExperience == 0 ? "リーダ経験ある､" : "リーダ経験ある､";
+        comment += leaderExperience == 0 ? "リーダ経験ある､" : "リーダ経験ない､";
         comment += efficiency == 0 ? "生産性高い" :
                 efficiency == 1 ? "生産性中" : "生産性低い";
 

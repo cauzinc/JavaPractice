@@ -102,7 +102,6 @@ public class StaffService {
             return ServerResponse.createByErrorMessage("need data");
         }
 
-
         Staff staff = new Staff();
 
         Business business = businessMapper.selectByName(staffDetail.getBusinessName());

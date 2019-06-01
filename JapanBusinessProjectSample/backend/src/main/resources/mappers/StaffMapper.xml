@@ -7,7 +7,7 @@
       <arg column="staff_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="staff_gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="position" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="business_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="business_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="prefered_field" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="prefered_language" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="mail" jdbcType="VARCHAR" javaType="java.lang.String" />
