@@ -1,9 +1,18 @@
 package com.sample.vo;
 
 public class StaffListItem {
+    private Integer id;
     private String staffName;
     private String businessName;
     private String tel;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getStaffName() {
         return staffName;

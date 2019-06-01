@@ -67,6 +67,7 @@ public class StaffService {
 
     public StaffListItem assembleStaffItemList(Staff staff) {
         StaffListItem staffListItem = new StaffListItem();
+        staffListItem.setId(staff.getId());
         staffListItem.setStaffName(staff.getStaffName());
         staffListItem.setTel(staff.getTel());
         Business business = businessMapper.selectByPrimaryKey(staff.getBusinessId());
