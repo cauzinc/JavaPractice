@@ -12,6 +12,8 @@ public interface BusinessMapper {
 
     int insertSelective(Business record);
 
+    List<Business> getBusinessList();
+
     Business selectByPrimaryKey(Integer id);
 
     Business selectByName(String name);

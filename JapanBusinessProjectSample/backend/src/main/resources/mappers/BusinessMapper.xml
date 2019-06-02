@@ -47,6 +47,14 @@
     from sample_business
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="getBusinessList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sample_business
+    order by update_time
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sample_business
     where id = #{id,jdbcType=INTEGER}

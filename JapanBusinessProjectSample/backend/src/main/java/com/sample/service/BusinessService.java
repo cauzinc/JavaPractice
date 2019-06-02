@@ -25,7 +25,7 @@ public class BusinessService {
     }
 
     public ServerResponse getBusinessList() {
-        List<Business> businessList = iBusinessDao.getBusinessList();
+        List<Business> businessList = businessMapper.getBusinessList();
         return ServerResponse.createBySuccess(businessList);
     }
 
