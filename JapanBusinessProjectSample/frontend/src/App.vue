@@ -50,7 +50,7 @@
                     { name: "ホーム", link: "home" },
                     { name: "取引先", link: "businessHome" },
                     { name: "取引先担当者", link: "principleHome" },
-                    { name: "スタッフ", link: "" },
+                    { name: "スタッフ", link: "staffHome" },
                     { name: "相談", link: "" },
                     { name: "案件", link: "" },
                     { name: "契約", link: "" },

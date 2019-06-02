@@ -1,5 +1,5 @@
 <template>
-    <div :class="$style['business-staff-container']">
+    <div :class="$style['staff-home-container']">
         <portal-info-list @go2Detail="go2Detail" @go2Create="createNewStaff()" :titleList="titleList" :infoList="staffList" style="margin-bottom: 30px;"></portal-info-list>
         <div :class="$style['other-info']">
             <portal-column :class="$style.column" :infoList="reportList" title="レポート"></portal-column>
@@ -25,7 +25,15 @@
         data() {
 			return {
                 titleList: ['スタッフ名', '所属先', '携帯電話'],
-
+                reportList: [
+                	{ name: 'スタッフ一覧', link: ""},
+	                { name: '今月まで稼動中のスタッフ', link: ""},
+	                { name: '最新推薦技術者リスト一覧', link: ""}
+                ],
+                toolList: [
+	                { name: 'スタッフ情報のインポート･エクスポート', link: ""},
+	                { name: 'スタッフ一括メール送信', link: ""}
+                ]
             }
         },
         created() {
@@ -35,18 +43,18 @@
             ...staffMapActions(['getStaffList']),
             go2Detail(id) {
             	if(id || id === 0) {
-            		this.$router.push({name: "StaffDetail", query: { staffId: id }})
+            		this.$router.push({name: "staffDetail", query: { staffId: id }})
                 }
             },
 	        createNewStaff() {
-            	this.$router.push({ name: "StaffCreate" })
+            	this.$router.push({ name: "staffCreate" })
             }
         }
 	}
 </script>
 
 <style lang="scss" module>
-    .business-home-container {
+    .staff-home-container {
         padding: 30px 10px;
         .other-info {
             @include flex-row-center;
