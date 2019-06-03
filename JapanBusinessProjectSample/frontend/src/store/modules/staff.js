@@ -27,7 +27,7 @@ let service = new Service({
 			return service.fetch('updateStaff', 'post', data);
 		},
 		insertStaff({ commit }, data) {
-			return service.fetch('insertPrinciple', 'post', data);
+			return service.fetch('insertStaff', 'post', data);
 		},
 		getStaffDetail({ commit }, data) {
 			return service.fetch('getStaffById', 'get', data);
