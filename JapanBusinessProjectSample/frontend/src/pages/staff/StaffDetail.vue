@@ -108,7 +108,7 @@
                     <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">評価</span>
-                            <span v-if="!editMode" :class="$style.item">{{note}}</span>
+                            <span v-if="!editMode" :class="$style.item">{{ $route.query.from === "staffComment" && staffComment ? staffComment : note}}</span>
                             <input v-else v-model="note" type="text" />
                         </div>
                         <div :class="$style['item-wrapper']">
@@ -150,10 +150,12 @@
 
 <script>
     import { createNamespacedHelpers } from 'vuex'
-    const { mapActions: staffMapActions } = createNamespacedHelpers('staff')
+    const { mapState: staffMapState, mapActions: staffMapActions } = createNamespacedHelpers('staff')
 	export default {
 		name: "StaffDetail",
-        computed: {},
+        computed: {
+            ...staffMapState(['staffComment'])
+        },
         data() {
 			return {
 				editMode: false,
@@ -204,7 +206,9 @@
         },
         methods: {
             ...staffMapActions(['getStaffDetail', 'deleteStaffById', 'updateStaff']),
-
+	        go2Comment() {
+            	this.$router.push({ name: "staffComment", query: { staffId: this.$route.query.staffId }});
+            },
             update() {
 	            if(!this.staffName.trim() || !this.businessName.trim()) {
                     return alert("スタッフ氏名と取引先名を入力してください");

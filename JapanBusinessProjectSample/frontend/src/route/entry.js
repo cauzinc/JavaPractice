@@ -9,6 +9,7 @@ import PrincipleCreate from '../pages/principle/PrincipleCreate'
 import StaffHome from '../pages/staff/StaffHome'
 import StaffDetail from '../pages/staff/StaffDetail'
 import StaffCreate from '../pages/staff/StaffCreate'
+import StaffComment from '../pages/staff/StaffComment'
 
 Vue.use(Router);
 
@@ -23,6 +24,7 @@ export default new Router({
         { path: '/principle-create', name: "principleCreate", component: PrincipleCreate },
 	    { path: '/staff-portal', name: "staffHome", component: StaffHome },
 	    { path: '/staff-detail', name: "staffDetail", component: StaffDetail },
-	    { path: '/staff-create', name: "staffCreate", component: StaffCreate }
+	    { path: '/staff-create', name: "staffCreate", component: StaffCreate },
+	    { path: '/staff-comment', name: "staffComment", component: StaffComment }
     ]
 })

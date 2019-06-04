@@ -10,7 +10,8 @@ let service = new Service({
 			{ value1: "", value2: "", value3: "" },
 			{ value1: "", value2: "", value3: "" },
 			{ value1: "", value2: "", value3: "" }
-		]
+		],
+		staffComment: ""
 	},
 	actions: {
 		getStaffList({ commit }, data) {
@@ -37,6 +38,9 @@ let service = new Service({
 		},
 		commentStaff({ commit }, data) {
 			return service.fetch('commentStaff', 'post', data);
+		},
+		submitComment({ commit }, data) {
+			commit('SUBMIT_COMMENT', data);
 		}
 	},
 	mutations: {
@@ -56,6 +60,9 @@ let service = new Service({
 				state.staffList[index].value3 = item.tel;
 				state.staffList[index].id = item.id;
 			})
+		},
+		SUBMIT_COMMENT(state, data) {
+			state.staffComment = data;
 		}
 
 	}
