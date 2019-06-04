@@ -91,7 +91,7 @@
                         </div>
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">評価</span>
-                            <input :class="$style.item" type="text" v-model="note" />
+                            <input @click="showCommentModal()" :class="$style.item" type="text" v-model="note" />
                         </div>
                     </div>
                 </div>
@@ -141,6 +141,19 @@
         },
         methods: {
             ...staffMapActions(['insertStaff']),
+	        showCommentModal() {
+            	let self = this;
+            	this.$modal.show('StaffCommentModal', {
+            		invokers: {
+			            submitComment(comment) {
+			            	this.$close().then(() => {
+					            self.note = comment;
+                            })
+
+                        }
+                    }
+                })
+            },
             goBack() {
             	this.$router.push({ name: "staffHome" })
             },

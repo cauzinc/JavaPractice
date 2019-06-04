@@ -108,8 +108,8 @@
                     <div :class="$style.line">
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">評価</span>
-                            <span v-if="!editMode" :class="$style.item">{{ $route.query.from === "staffComment" && staffComment ? staffComment : note}}</span>
-                            <input v-else v-model="note" type="text" />
+                            <span v-if="!editMode" :class="$style.item">{{note}}</span>
+                            <input @click="go2Comment" v-else v-model="note" type="text" />
                         </div>
                         <div :class="$style['item-wrapper']">
                             <span :class="$style.label">最寄駅</span>
@@ -207,7 +207,17 @@
         methods: {
             ...staffMapActions(['getStaffDetail', 'deleteStaffById', 'updateStaff']),
 	        go2Comment() {
-            	this.$router.push({ name: "staffComment", query: { staffId: this.$route.query.staffId }});
+		        let self = this;
+		        this.$modal.show('StaffCommentModal', {
+			        invokers: {
+				        submitComment(comment) {
+					        this.$close().then(() => {
+						        self.note = comment;
+					        })
+
+				        }
+			        }
+		        })
             },
             update() {
 	            if(!this.staffName.trim() || !this.businessName.trim()) {
